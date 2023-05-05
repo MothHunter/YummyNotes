@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -65,24 +66,48 @@ fun MovieRow(
 }
  */
 fun RecipeRow(recipe: Recipe) { //später werden mehrere Parameter eingefügt
-    Card(modifier = Modifier.fillMaxWidth().padding(20.dp)){
-        Column (
-            modifier = Modifier.fillMaxWidth(),
 
+    Card(modifier = Modifier
+        .fillMaxWidth()
+        .padding(20.dp),
+        elevation = 5.dp,
+        shape = RoundedCornerShape(15.dp)
+    ) {
+        Column(
+            modifier = Modifier.fillMaxWidth()
+                .height(200.dp)
+                .width(200.dp),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.End
         ) {
             Text(recipe.title)
             Text(recipe.description)
             Text(recipe.instructions)
             Text(recipe.ingredients)
-           //later add the row and box etc when needed
-            Image(painter = painterResource(id = recipe.images[0]), contentDescription = null)
+            //later add the row and box etc when needed
+            Box(
+                modifier = Modifier.fillMaxWidth()
+                    .height(200.dp)
+                    .width(200.dp)
+            ) {
+                Image(painter = painterResource(id = recipe.images[0]),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp)
+                        .width(200.dp))
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(10.dp)
+                )
+
+
+            }
 
 
         }
-
-
-    }
-}
+    }}
 //hier können UI Elemente verschachtelt werden
 
 
