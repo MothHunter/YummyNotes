@@ -1,6 +1,7 @@
 package com.example.yummynotes
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -10,6 +11,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.paint
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -70,21 +74,22 @@ fun RecipeRow(recipe: Recipe) { //später werden mehrere Parameter eingefügt
 
     Card(modifier = Modifier
         .fillMaxWidth()
-        .padding(20.dp),
+        .padding(20.dp)
+        .height(200.dp),
+
         elevation = 5.dp,
-        shape = RoundedCornerShape(15.dp)
+        shape = RoundedCornerShape(15.dp),
+        backgroundColor = Color.Gray
+
     ) {
         Column(
-            modifier = Modifier.fillMaxWidth()
-                .height(200.dp)
-                .width(200.dp),
             verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.End
+            //horizontalAlignment = Alignment.End
         ) {
-            Text(recipe.title)
-            Text(recipe.description)
-            Text(recipe.instructions)
-            Text(recipe.ingredients)
+            Text("${recipe.title}\n${recipe.description}\n${recipe.instructions}\n${recipe.ingredients}",
+                modifier = Modifier.height(80.dp)
+                    .padding(10.dp))
+
             //later add the row and box etc when needed
             Box(
                 modifier = Modifier.fillMaxWidth()
@@ -99,7 +104,6 @@ fun RecipeRow(recipe: Recipe) { //später werden mehrere Parameter eingefügt
                         .fillMaxWidth()
                         .height(200.dp)
                         .width(200.dp)
-
                 )
                 Box(
                     modifier = Modifier
