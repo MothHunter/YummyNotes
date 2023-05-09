@@ -3,19 +3,19 @@ package com.example.yummynotes.models
 import com.example.yummynotes.R
 
 data class Recipe(
-    val id: String,
-    val title: String,
-    val description: String,
-    val ingredients: String, //später: Klasse ingredients die eine Menge übergeben bekommt
-    val instructions: String,
-    val images: List<Int> //noch korrigieren weil wir nicht urls haben
+    val id: Int = -1,
+    val title: String = "",
+    val description: String = "",
+    val ingredients: String = "", //später: Klasse ingredients die eine Menge übergeben bekommt
+    val instructions: String = "",
+    val images: List<Int> = emptyList() //noch korrigieren weil wir nicht urls haben
     //var isFavorite: Boolean = false --> das wird bei der Datenbank relevant
 )
 
 fun getRecipes(): List<Recipe> {
     return listOf(
         Recipe(
-            id = "tt1",
+            id = 0,
             title = "Linsensuppe",
             description = "Suppe mit Linsen",
             ingredients = "Zwiebel, Kümmel, Linsen, Suppenwürfel",
@@ -25,7 +25,7 @@ fun getRecipes(): List<Recipe> {
 
         ),
         Recipe(
-            id = "tt2",
+            id = 1,
             title = "Pizza",
             description = "Pizza mit Salami",
             ingredients = "Pizzateig, Tomatensauce, Mozerella, Salami",
@@ -33,7 +33,7 @@ fun getRecipes(): List<Recipe> {
             images = listOf(R.drawable.pizza)
         ),
         Recipe(
-            id = "tt3",
+            id = 2,
             title = "Curry",
             description = "Curry mit Huhn",
             ingredients = "Reis, Kokosmilch, Huhn, Mango, Zwiebel",
