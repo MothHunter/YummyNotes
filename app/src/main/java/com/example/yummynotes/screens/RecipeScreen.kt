@@ -6,6 +6,6 @@ import androidx.navigation.NavController
 import com.example.yummynotes.models.RecipeViewModel
 
 @Composable
-fun RecipeScreen(navController: NavController, viewModel: RecipeViewModel, recipeID: Int) {
+fun RecipeScreen(navController: NavController, viewModel: RecipeViewModel, recipeID: Int?) {
 
 }
