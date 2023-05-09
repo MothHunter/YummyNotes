@@ -29,7 +29,7 @@ fun HomeScreen(navController: NavController) {
 
 @Composable
 fun RecipeList(recipes: List<Recipe>) {
-    LazyColumn {
+    LazyColumn (modifier = Modifier.background(color = Color.LightGray)){
         items(recipes) { recipe -> //aus der Liste recipes bekommt es der Reihe nach Elemente übergeben --> geh durch die Liste
             RecipeRow(recipe)
         }
@@ -86,7 +86,7 @@ fun RecipeRow(recipe: Recipe) { //später werden mehrere Parameter eingefügt
             verticalArrangement = Arrangement.Top,
             //horizontalAlignment = Alignment.End
         ) {
-            Text("${recipe.title}\n${recipe.description}\n${recipe.instructions}\n${recipe.ingredients}",
+            Text("${recipe.title}\n${recipe.description}",
                 modifier = Modifier.height(80.dp)
                     .padding(10.dp))
 
