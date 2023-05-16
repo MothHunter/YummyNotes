@@ -4,7 +4,7 @@ import com.example.yummynotes.R
 
 data class Recipe(
     val id: Int = -1,
-    val title: String = "",
+    val title: String = "Recipe not found!",
     val description: String = "",
     val ingredients: String = "", //später: Klasse ingredients die eine Menge übergeben bekommt
     val instructions: String = "",

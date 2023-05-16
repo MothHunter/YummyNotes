@@ -9,6 +9,8 @@ class RecipeViewModel() : ViewModel() {
         get() = _recipes
 
     fun getRecipeByID(recipeID: Int): Recipe {
-        return (_recipes.filter { it.id == recipeID})[0]
+        recipeID.let {
+            return (_recipes.filter { it.id == recipeID})[0]
+        }
     }
 }

@@ -18,15 +18,15 @@ fun Navigation() {
     val viewModel = RecipeViewModel()
     NavHost(navController = navController, startDestination = Screen.MainScreen.route) {
         composable(route = Screen.MainScreen.route){
-            HomeScreen(navController = navController)
+            HomeScreen(navController = navController, viewModel)
         }
         composable(route = Screen.RecipeScreen.route,
-            arguments = listOf(navArgument(name = "recipeID") {type = NavType.StringType}))
+            arguments = listOf(navArgument(name = "recipeID") {type = NavType.IntType}))
             {
             backStackEntry ->
                 RecipeScreen(navController = navController,
                     viewModel = viewModel,
-                    recipeID = backStackEntry.arguments?.getInt("recipeID"))
+                    recipeID = backStackEntry.arguments?.getInt("recipeID") ?: 0)
         }
     }
 }

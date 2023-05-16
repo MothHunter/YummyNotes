@@ -2,6 +2,7 @@ package com.example.yummynotes
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -19,63 +20,40 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.yummynotes.models.Recipe
+import com.example.yummynotes.models.RecipeViewModel
 import com.example.yummynotes.models.getRecipes
+import com.example.yummynotes.navigation.Screen
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navController: NavController, viewModel: RecipeViewModel) {
 
-    RecipeList(getRecipes())
+    RecipeList(viewModel.recipes, navController)
 }
 
 @Composable
-fun RecipeList(recipes: List<Recipe>) {
-    LazyColumn (modifier = Modifier.background(color = Color.LightGray)){
+fun RecipeList(recipes: List<Recipe>,
+navController: NavController) {
+    LazyColumn(modifier = Modifier.background(color = Color.LightGray)){
         items(recipes) { recipe -> //aus der Liste recipes bekommt es der Reihe nach Elemente übergeben --> geh durch die Liste
-            RecipeRow(recipe)
-        }
-    }
-}
-
-@Composable
-
-/*
-@Composable
-fun MovieRow(
-    movie: Movie = getMovies()[0],
-    modifier: Modifier = Modifier,
-    onItemClick: (String) -> Unit = {},
-    onFavIconClick: (String) -> Unit = {}
-) {
-    Card(modifier = modifier
-        .clickable {
-            onItemClick(movie.id)
-        }
-        .fillMaxWidth()
-        .padding(5.dp),
-        shape = Shapes.large,
-        elevation = 10.dp
-    ) {
-        Column {
-            Box(modifier = Modifier
-                .height(150.dp)
-                .fillMaxWidth(),
-                contentAlignment = Alignment.Center
-            ) {
-                MovieImage(imageUrl = movie.images[0])
-                FavoriteIcon()
+            RecipeRow(recipe
+            ) { recipeID ->
+                navController.navigate(Screen.RecipeScreen.withId(recipeID))
             }
-
-            MovieDetails(modifier = Modifier.padding(12.dp), movie = movie)
         }
     }
 }
- */
-fun RecipeRow(recipe: Recipe) { //später werden mehrere Parameter eingefügt
+
+@Composable
+fun RecipeRow(recipe: Recipe,
+        onRecipeClick: (Int) -> Unit) { //später werden mehrere Parameter eingefügt
 
     Card(modifier = Modifier
         .fillMaxWidth()
         .padding(20.dp)
-        .height(200.dp),
+        .height(200.dp)
+        .clickable{
+                  onRecipeClick(recipe.id)
+        },
 
         elevation = 5.dp,
         shape = RoundedCornerShape(15.dp),
