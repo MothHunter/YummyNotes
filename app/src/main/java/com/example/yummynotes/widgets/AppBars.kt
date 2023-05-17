@@ -11,6 +11,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.IconButton
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 
 
@@ -25,6 +26,7 @@ val NavItems = listOf(
         route = "add",
         icon = Icons.Rounded.Add,
     )
+
 )
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -34,8 +36,9 @@ fun TopNavigationBar(title: String, navController: NavController) {
 
     Column {
         TopAppBar(
+            backgroundColor = Color.DarkGray,
             title = {
-                Row { Text(text = title, textAlign = TextAlign.Center) }
+                Row { Text(text = title, textAlign = TextAlign.Center, color = Color.White) }
             },
             actions = {
                 Row {
@@ -44,7 +47,8 @@ fun TopNavigationBar(title: String, navController: NavController) {
                         IconButton(onClick = { navController.navigate(item.route) }) {
                             Icon(
                                 imageVector = item.icon,
-                                contentDescription = "${item.name} Icon"
+                                contentDescription = "${item.name} Icon",
+                                tint = Color.White
                             )
                         }
                     }
