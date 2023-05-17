@@ -1,24 +1,18 @@
 package com.example.yummynotes.screens
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.gestures.rememberScrollableState
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.loader.content.Loader.ForceLoadContentObserver
 import androidx.navigation.NavController
-import com.example.yummynotes.RecipeList
 import com.example.yummynotes.models.RecipeViewModel
 import com.example.yummynotes.widgets.TopNavigationBar
 
@@ -57,6 +51,13 @@ fun RecipeScreen(navController: NavController, viewModel: RecipeViewModel, recip
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth())
                 Text(text = recipe.ingredients.replace(", ", "\n"),
+                    fontSize = 20.sp,
+                    modifier = Modifier.fillMaxWidth())
+                Text(text = "Anleitung",
+                    fontSize = 30.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth())
+                Text(text =recipe.instructions,
                     fontSize = 20.sp,
                     modifier = Modifier.fillMaxWidth())
             }

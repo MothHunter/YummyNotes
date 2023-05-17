@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.yummynotes.models.Recipe
 import com.example.yummynotes.models.RecipeViewModel
-import com.example.yummynotes.models.getRecipes
 
 import com.example.yummynotes.widgets.TopNavigationBar
 
