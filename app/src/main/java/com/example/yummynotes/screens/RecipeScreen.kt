@@ -15,15 +15,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.loader.content.Loader.ForceLoadContentObserver
 import androidx.navigation.NavController
+import com.example.yummynotes.RecipeList
 import com.example.yummynotes.models.RecipeViewModel
+import com.example.yummynotes.widgets.TopNavigationBar
 
 @Composable
 fun RecipeScreen(navController: NavController, viewModel: RecipeViewModel, recipeID: Int) {
     val recipe = viewModel.getRecipeByID(recipeID)
 
+
     Column(modifier = Modifier.fillMaxWidth(),
     verticalArrangement = Arrangement.spacedBy(5.dp)){
+        TopNavigationBar(recipe.title, navController)
         Text(text =recipe.title,
         fontSize = 40.sp,
         textAlign = TextAlign.Center,
