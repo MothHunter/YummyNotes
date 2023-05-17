@@ -12,8 +12,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -22,12 +20,22 @@ import androidx.navigation.NavController
 import com.example.yummynotes.models.Recipe
 import com.example.yummynotes.models.RecipeViewModel
 import com.example.yummynotes.models.getRecipes
+
+import com.example.yummynotes.widgets.TopNavigationBar
+
+
 import com.example.yummynotes.navigation.Screen
+
 
 @Composable
 fun HomeScreen(navController: NavController, viewModel: RecipeViewModel) {
 
-    RecipeList(viewModel.recipes, navController)
+    Column{
+        TopNavigationBar("Home", navController)
+        RecipeList(viewModel.recipes, navController)
+    }
+
+
 }
 
 @Composable
