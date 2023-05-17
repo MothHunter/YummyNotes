@@ -11,8 +11,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -20,11 +18,18 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.yummynotes.models.Recipe
 import com.example.yummynotes.models.getRecipes
+import com.example.yummynotes.widgets.TopNavigationBar
+
+
+
 
 @Composable
 fun HomeScreen(navController: NavController) {
 
-    RecipeList(getRecipes())
+    Column{
+        TopNavigationBar("Home", navController)
+        RecipeList(getRecipes())
+    }
 }
 
 @Composable
@@ -87,12 +92,14 @@ fun RecipeRow(recipe: Recipe) { //später werden mehrere Parameter eingefügt
             //horizontalAlignment = Alignment.End
         ) {
             Text("${recipe.title}\n${recipe.description}",
-                modifier = Modifier.height(80.dp)
+                modifier = Modifier
+                    .height(80.dp)
                     .padding(10.dp))
 
             //later add the row and box etc when needed
             Box(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .height(200.dp)
                     .width(200.dp)
 
