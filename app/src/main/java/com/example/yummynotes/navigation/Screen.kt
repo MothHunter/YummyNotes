@@ -8,4 +8,6 @@ sealed class Screen(val route: String) {
             return this.route.replace(oldValue = "{recipeID}", newValue = recipeID.toString())
         }
     }
+
+    object EditAndAddScreen : Screen("editandadd")
 }

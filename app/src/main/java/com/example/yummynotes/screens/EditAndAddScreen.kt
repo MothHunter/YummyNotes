@@ -38,7 +38,7 @@ fun EditAndAddScreen(viewModel: RecipeViewModel, navController: NavHostControlle
 
     //val recipe = viewModel.getRecipeByID(recipeID)
     Column{
-        TopNavigationBar("Home", navController)
+        TopNavigationBar("Edit or Add", navController)
     }
     @Composable
     fun MainContent(recipe: Recipe){
