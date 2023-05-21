@@ -6,12 +6,6 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class RecipeViewModel() : ViewModel() {
-    var title = mutableStateOf("")
-    var description = mutableStateOf("")
-    var ingredients = mutableStateOf("")
-    var instructions = mutableStateOf("")
-    var images = MutableStateFlow(listOf<Int>())
-
 
     private val _recipes = getRecipes().toMutableStateList()
     val recipes: List<Recipe>
@@ -23,7 +17,4 @@ class RecipeViewModel() : ViewModel() {
         }
     }
 
-    fun onTextChange(title: String){
-        this.title.value = title
-    }
 }

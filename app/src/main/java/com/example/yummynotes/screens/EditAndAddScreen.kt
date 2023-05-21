@@ -94,7 +94,7 @@ fun MainContent(recipe: Recipe) {
             Spacer(modifier = Modifier.padding(10.dp))
             OutlinedTextField(
                 value = descriptionState.value,
-                onValueChange = { recipe.description = it },
+                onValueChange = { descriptionState.value = it },
                 modifier = Modifier.fillMaxWidth(),
                 label = {
                     Text(text = "description")}
@@ -102,7 +102,7 @@ fun MainContent(recipe: Recipe) {
             Spacer(modifier = Modifier.padding(10.dp))
             OutlinedTextField(
                 value = ingredientsState.value,
-                onValueChange = { recipe.ingredients = it},
+                onValueChange = { ingredientsState.value = it},
                 modifier = Modifier.fillMaxWidth(),
                 label = {
                     Text(text = "ingredients")}
@@ -110,7 +110,7 @@ fun MainContent(recipe: Recipe) {
             Spacer(modifier = Modifier.padding(10.dp))
             OutlinedTextField(
                 value = instructionsState.value,
-                onValueChange = { recipe.instructions = it },
+                onValueChange = { instructionsState.value = it },
                 modifier = Modifier.fillMaxWidth(),
                 label = {
                     Text(text = "instructions")}
