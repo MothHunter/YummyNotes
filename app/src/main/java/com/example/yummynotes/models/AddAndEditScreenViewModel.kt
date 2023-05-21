@@ -12,5 +12,11 @@ class AddAndEditScreenViewModel() : ViewModel() {
     var ingredients = mutableStateOf("")
     var instructions = mutableStateOf("")
     var images = MutableStateFlow(listOf<Int>())
+/*
+    fun onTextChange(title: String){
+        this.title.value = title
+    }*/
+
+    //we do not need a viewmodel here anymore???
 
 }

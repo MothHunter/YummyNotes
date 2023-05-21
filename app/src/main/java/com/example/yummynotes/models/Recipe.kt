@@ -4,10 +4,10 @@ import com.example.yummynotes.R
 
 data class Recipe(
     val id: Int = -1,
-    val title: String = "Recipe not found!",
-    val description: String = "",
-    val ingredients: String = "", //später: Klasse ingredients die eine Menge übergeben bekommt
-    val instructions: String = "",
+    var title: String = "Recipe not found!",
+    var description: String = "",
+    var ingredients: String = "", //später: Klasse ingredients die eine Menge übergeben bekommt
+    var instructions: String = "",
     val images: List<Int> = emptyList() //noch korrigieren weil wir nicht urls haben
     //var isFavorite: Boolean = false --> das wird bei der Datenbank relevant
 )
