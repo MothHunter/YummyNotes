@@ -1,5 +1,5 @@
 package com.example.yummynotes.workers
-
+/*
 import android.content.Context
 import android.util.Log
 import androidx.work.CoroutineWorker
@@ -34,9 +34,10 @@ class SeedDatabaseWorker(
     private suspend fun populateDatabase(database: RecipeDatabase){
         val dao = database.recipeDao()
 
-        dao.deleteAll()
+       // dao.deleteAll()
         getRecipes().forEach{
             dao.add(it)
         }
     }
 }
+*/
