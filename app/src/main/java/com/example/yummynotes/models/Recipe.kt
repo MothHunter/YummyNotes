@@ -1,8 +1,12 @@
 package com.example.yummynotes.models
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.example.yummynotes.R
 
+@Entity
 data class Recipe(
+    @PrimaryKey (autoGenerate = true)
     val id: Int = -1,
     var title: String = "Recipe not found!",
     var description: String = "",
