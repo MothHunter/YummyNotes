@@ -2,9 +2,8 @@ package com.example.yummynotes.repositories
 
 import com.example.yummynotes.data.RecipeDao
 import com.example.yummynotes.models.Recipe
-import kotlinx.coroutines.flow.Flow
 
-class MovieRepository(private val recipeDao: RecipeDao) {
+class RecipeRepository(private val recipeDao: RecipeDao) {
     suspend fun addRecipe(recipe: Recipe) = recipeDao.add(recipe = recipe)
 
     suspend fun updateRecipe(recipe: Recipe) = recipeDao.update(recipe = recipe)
