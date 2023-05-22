@@ -10,5 +10,7 @@ class RecipeRepository(private val recipeDao: RecipeDao) {
 
     suspend fun deleteRecipe(recipe: Recipe) = recipeDao.delete(recipe)
 
-    suspend fun getAllRecipes() = recipeDao.getAllRecipes()
+    fun getAllRecipes() = recipeDao.getAllRecipes()
+
+    fun getRecipeById(id: Int) = recipeDao.getRecipeByID(id)
 }
