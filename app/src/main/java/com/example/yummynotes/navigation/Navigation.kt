@@ -11,6 +11,7 @@ import com.example.yummynotes.models.RecipeViewModel
 import com.example.yummynotes.navigation.Screen
 import com.example.yummynotes.screens.EditAndAddScreen
 import com.example.yummynotes.screens.RecipeScreen
+import com.example.yummynotes.screens.SplashScreen
 
 @Composable
 fun Navigation() {
@@ -18,7 +19,8 @@ fun Navigation() {
     val navController = rememberNavController()
     val viewModel = RecipeViewModel()
     //val addAndEditScreenViewModel = AddAndEditScreenViewModel()
-    NavHost(navController = navController, startDestination = Screen.MainScreen.route) {
+
+    NavHost(navController = navController, startDestination = Screen.SplashScreen.route) {
         composable(route = Screen.MainScreen.route){
             HomeScreen(navController = navController, viewModel)
         }
@@ -36,6 +38,9 @@ fun Navigation() {
                     EditAndAddScreen(navController = navController,
                                     viewModel = viewModel,
                                      recipeID = backStackEntry.arguments?.getInt("recipeID") ?: 0)
+        }
+        composable(route = Screen.SplashScreen.route){
+            SplashScreen(navController = navController)
         }
     }
 }

@@ -1,6 +1,8 @@
 package com.example.yummynotes.navigation
 
 sealed class Screen(val route: String) {
+
+    object SplashScreen : Screen("splash")
     object MainScreen : Screen("main")
 
     object RecipeScreen : Screen("recipe/{recipeID}") {
