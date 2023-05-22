@@ -6,4 +6,5 @@ import androidx.lifecycle.ViewModel
 
 class AppBarViewModel() : ViewModel() {
     var actionIconOnClick = mutableStateOf({})
+
 }
