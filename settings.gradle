@@ -14,3 +14,19 @@ dependencyResolutionManagement {
 }
 rootProject.name = "YummyNotes"
 include ':app'
+/*
+
+
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "MovieAppMAD23"
+include ':app'
+
+ */
