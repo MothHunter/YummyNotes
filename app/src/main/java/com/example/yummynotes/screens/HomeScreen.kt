@@ -8,7 +8,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,9 +44,10 @@ fun HomeScreen(navController: NavController, viewModel: RecipeViewModel) {
 @Composable
 fun RecipeList(recipes: List<Recipe>,
 navController: NavController) {
+
     LazyColumn(modifier = Modifier.background(color = Color.LightGray)){
         items(recipes) { recipe -> //aus der Liste recipes bekommt es der Reihe nach Elemente übergeben --> geh durch die Liste
-            RecipeRow(recipe
+            RecipeRow(recipe,
             ) { recipeID ->
                 navController.navigate(Screen.RecipeScreen.withId(recipeID))
             }
@@ -71,10 +76,21 @@ fun RecipeRow(recipe: Recipe,
             verticalArrangement = Arrangement.Top,
             //horizontalAlignment = Alignment.End
         ) {
+            Row(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(10.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+            ){
             Text("${recipe.title}\n${recipe.description}",
                 modifier = Modifier.height(80.dp)
                     .padding(10.dp))
+                Spacer(modifier= Modifier.width(5.dp))
 
+                Icon(imageVector = Icons.Default.FavoriteBorder, contentDescription = "Favorites")
+
+               // Text("Favorites")
+
+        }
             //later add the row and box etc when needed
             Box(
                 modifier = Modifier.fillMaxWidth()
