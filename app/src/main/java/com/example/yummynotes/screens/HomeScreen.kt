@@ -35,29 +35,35 @@ fun HomeScreen(navController: NavController, viewModel: RecipeViewModel) {
 
     Column{
         TopNavigationBar("Home", navController)
-        RecipeList(viewModel.recipes, navController)
+        RecipeList(viewModel = viewModel, navController = navController)
     }
 
 
 }
 
 @Composable
-fun RecipeList(recipes: List<Recipe>,
-navController: NavController) {
+fun RecipeList(
+navController: NavController,
+viewModel: RecipeViewModel) {
+    val recipes = viewModel.recipes
 
     LazyColumn(modifier = Modifier.background(color = Color.LightGray)){
         items(recipes) { recipe -> //aus der Liste recipes bekommt es der Reihe nach Elemente übergeben --> geh durch die Liste
             RecipeRow(recipe,
-            ) { recipeID ->
-                navController.navigate(Screen.RecipeScreen.withId(recipeID))
-            }
+                onRecipeClick =  { recipeID ->
+                    navController.navigate(Screen.RecipeScreen.withId(recipeID)) },
+                onFavIconClick = { recipeID -> viewModel.toggleFavorite(recipeID)}
+
+            )
         }
     }
 }
 
 @Composable
 fun RecipeRow(recipe: Recipe,
-        onRecipeClick: (Int) -> Unit) { //später werden mehrere Parameter eingefügt
+              onRecipeClick: (Int) -> Unit,
+              onFavIconClick: (Int) -> Unit = {}
+) { //später werden mehrere Parameter eingefügt
 
     Card(modifier = Modifier
         .fillMaxWidth()
@@ -86,7 +92,10 @@ fun RecipeRow(recipe: Recipe,
                     .padding(10.dp))
                 Spacer(modifier= Modifier.width(5.dp))
 
-                Icon(imageVector = Icons.Default.FavoriteBorder, contentDescription = "Favorites")
+                Icon(imageVector = Icons.Default.FavoriteBorder,
+                    contentDescription = "Favorites",
+                    modifier = Modifier.clickable {  }
+                )
 
                // Text("Favorites")
 
