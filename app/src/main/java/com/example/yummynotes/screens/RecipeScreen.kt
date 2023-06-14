@@ -23,7 +23,7 @@ fun RecipeScreen(navController: NavController, viewModel: RecipeViewModel, recip
 
     Column(modifier = Modifier.fillMaxWidth(),
     verticalArrangement = Arrangement.spacedBy(5.dp)){
-        TopNavigationBar(recipe.title, navController)
+        TopNavigationBar(recipe!!.title, navController)
         Box {
             Column(
                 modifier = Modifier

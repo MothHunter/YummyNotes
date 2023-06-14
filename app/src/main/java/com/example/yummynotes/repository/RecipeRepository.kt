@@ -21,16 +21,17 @@ class RecipeRepository(private val recipeDao: RecipeDao) {
 
         //hab ich das richtige flow importiert @Florian?
     }
-/*
-    fun getById(id: Long) : Flow<Recipe?> = recipeDao.get(id)
+
+    //fun getById(id: Long) : Flow<Recipe?> = recipeDao.get(id)
 
     companion object {
-        // For Singleton instantiation
-        @Volatile private var instance: MovieRepository? = null
+        // Ein Repository als Singleton
+        @Volatile
+        private var instance: RecipeRepository? = null
 
-        fun getInstance(dao: MovieDao) =
+        fun getInstance(dao: RecipeDao) =
             instance ?: synchronized(this) {
-                instance ?: MovieRepository(dao).also { instance = it }
+                instance ?: RecipeRepository(dao).also { instance = it }
             }
-    }*/
+    }
 }

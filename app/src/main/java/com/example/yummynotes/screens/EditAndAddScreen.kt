@@ -34,7 +34,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun EditAndAddScreen(viewModel: RecipeViewModel, navController: NavHostController, recipeID: Int) {
-    val recipe = viewModel.getRecipeByID(recipeID)
+     val recipe : Recipe = viewModel.getRecipeByID(recipeID)
    /* val coroutineScope = remember {
         CoroutineScope(Dispatchers.Main)
     }*/
@@ -70,11 +70,11 @@ fun EditAndAddScreen(viewModel: RecipeViewModel, navController: NavHostControlle
    // }
 
 @Composable
-fun MainContent(recipe: Recipe) {
-    val titleState = remember { mutableStateOf(recipe.title) }
-    val descriptionState = remember { mutableStateOf(recipe.description) }
-    val ingredientsState = remember { mutableStateOf(recipe.ingredients) }
-    val instructionsState = remember { mutableStateOf(recipe.instructions) }
+fun MainContent(recipe: Recipe?) {
+    val titleState = remember { mutableStateOf(recipe!!.title) }
+    val descriptionState = remember { mutableStateOf(recipe!!.description) }
+    val ingredientsState = remember { mutableStateOf(recipe!!.ingredients) }
+    val instructionsState = remember { mutableStateOf(recipe!!.instructions) }
 
     Column {
         Column(

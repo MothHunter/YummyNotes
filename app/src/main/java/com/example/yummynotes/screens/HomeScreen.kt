@@ -14,20 +14,30 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.yummynotes.data.RecipeDao
 import com.example.yummynotes.models.Recipe
 import com.example.yummynotes.models.RecipeViewModel
+import com.example.yummynotes.models.getRecipes
 
 import com.example.yummynotes.widgets.TopNavigationBar
 
 
 import com.example.yummynotes.navigation.Screen
+import com.example.yummynotes.repository.RecipeRepository
+import com.example.yummynotes.utils.Injector
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -37,40 +47,48 @@ fun HomeScreen(navController: NavController, viewModel: RecipeViewModel) {
         TopNavigationBar("Home", navController)
         RecipeList(viewModel = viewModel, navController = navController)
     }
-
-
 }
+
 
 @Composable
 fun RecipeList(
 navController: NavController,
 viewModel: RecipeViewModel) {
-    val recipes = viewModel.recipes
+    val viewModel: RecipeViewModel = viewModel(factory = Injector.provideRecipeViewModelFactory(
+        LocalContext.current))
+    val recipesState by viewModel.recipes.collectAsState()
+    val coroutineScope = rememberCoroutineScope()
 
     LazyColumn(modifier = Modifier.background(color = Color.LightGray)){
-        items(recipes) { recipe -> //aus der Liste recipes bekommt es der Reihe nach Elemente übergeben --> geh durch die Liste
-            RecipeRow(recipe,
-                onRecipeClick =  { recipeID ->
+        items(items = getRecipes().toMutableList()) { recipeItem -> //aus der Liste recipes bekommt es der Reihe nach Elemente übergeben --> geh durch die Liste
+            RecipeRow(
+                recipe = recipeItem,
+                onRecipeClick =  { recipeID: Int ->
                     navController.navigate(Screen.RecipeScreen.withId(recipeID)) },
-                onFavIconClick = { recipeID -> viewModel.toggleFavorite(recipeID)}
+                onFavIconClick = { recipe ->
+                    coroutineScope.launch {
+                        viewModel.toggleFavorite(recipe)
+                    }
+                }
 
             )
         }
+
     }
 }
 
 @Composable
 fun RecipeRow(recipe: Recipe,
               onRecipeClick: (Int) -> Unit,
-              onFavIconClick: (Int) -> Unit = {}
+              onFavIconClick: (Recipe) -> Unit = {}
 ) { //später werden mehrere Parameter eingefügt
 
     Card(modifier = Modifier
         .fillMaxWidth()
         .padding(20.dp)
         .height(200.dp)
-        .clickable{
-                  onRecipeClick(recipe.id)
+        .clickable {
+            onRecipeClick(recipe.id)
         },
 
         elevation = 5.dp,
