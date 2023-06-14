@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {
-    private var _recipes = MutableStateFlow(listOf<Recipe>())
+    private val _recipes = MutableStateFlow(listOf<Recipe>())
     val recipes: StateFlow<List<Recipe>> = _recipes.asStateFlow()
     /*val recipesList: List<Recipe> = recipes.to
         get() = _recipes.to
@@ -18,27 +18,28 @@ class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {
     val recipes: List<Recipe>
         get() = _recipes*/
 
+    // TODO: BAD!!! use worker in RecipeDatabase.onCreate!!!!
+    suspend fun addRecipes(){
+        if (recipes.value.isEmpty()){
+            getRecipes().forEach{ recipe -> repository.addRecipe(recipe)}
+        }
+    }
+
     init {
         viewModelScope.launch {
-            repository.getAllRecipes().distinctUntilChanged()
-                .collect { listOfRecipes ->
-                    if (listOfRecipes.isNullOrEmpty()) {
-                        Log.d("RecipeViewModel", "No Recipes")
-                    } else {
-                        val baseRecipes = getRecipes()
-                        for(recipe in baseRecipes){
-                            repository.addRecipe(recipe)
-                        }
-                        _recipes = MutableStateFlow(listOf<Recipe>())
-                    }
-                }
+            //Log.d("HomeScreenVM", "add movies completed")
+            Log.d("HomeScreenVM", "coroutine launched")
+            repository.getAllRecipes().collect { movieList ->
+                _recipes.value = movieList
+            }
+            addRecipes()
         }
     }
 
    fun getRecipeByID(recipeID: Int): Recipe {
-        recipeID.let {
+        //recipeID.let {
             return (_recipes.value.filter { it.id == recipeID })[0]
-        }
+        //}
     }
 
     //fun getRecipeByID(recipeID: Int?) = recipes.value.filter { it.id == recipeID }[0]

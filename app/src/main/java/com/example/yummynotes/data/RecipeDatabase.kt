@@ -6,11 +6,13 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.yummynotes.models.Recipe
+import com.example.yummynotes.models.getRecipes
 
 @Database(
     entities = [Recipe::class],
-    version = 1,
+    version = 3,
     exportSchema = false
 )
 
@@ -25,6 +27,20 @@ abstract class RecipeDatabase : RoomDatabase() {
             return instance ?: synchronized(this) {
                 // synchronized => cannot be accessed by more than one thread at a time
                 Room.databaseBuilder(context, RecipeDatabase::class.java, "movie_db")
+                    .addCallback(
+                        object : Callback() {
+                            override fun onCreate(db: SupportSQLiteDatabase) {
+                                super.onCreate(db)
+                                // TODO: use worker to fill Database
+
+                            }
+
+                            override fun onOpen(db: SupportSQLiteDatabase) {
+                                super.onOpen(db)
+                                // do work on each start
+                            }
+                        }
+                    )
                     .fallbackToDestructiveMigration()
                     .build()
                     .also {

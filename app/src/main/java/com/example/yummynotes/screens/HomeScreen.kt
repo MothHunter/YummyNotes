@@ -60,7 +60,7 @@ viewModel: RecipeViewModel) {
     val coroutineScope = rememberCoroutineScope()
 
     LazyColumn(modifier = Modifier.background(color = Color.LightGray)){
-        items(items = getRecipes().toMutableList()) { recipeItem -> //aus der Liste recipes bekommt es der Reihe nach Elemente übergeben --> geh durch die Liste
+        items(items = viewModel.recipes.value) { recipeItem -> //aus der Liste recipes bekommt es der Reihe nach Elemente übergeben --> geh durch die Liste
             RecipeRow(
                 recipe = recipeItem,
                 onRecipeClick =  { recipeID: Int ->
