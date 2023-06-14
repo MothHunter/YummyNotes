@@ -31,13 +31,13 @@ class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {
         }
     }
 
-   /* fun getRecipeByID(recipeID: Int): Recipe {
+   fun getRecipeByID(recipeID: Int): Recipe {
         recipeID.let {
             return (_recipes.value.filter { it.id == recipeID })[0]
         }
-    }*/
+    }
 
-    fun getRecipeByID(recipeID: Int?) = recipes.value.filter { it.id == recipeID }[0]
+    //fun getRecipeByID(recipeID: Int?) = recipes.value.filter { it.id == recipeID }[0]
 
     suspend fun toggleFavorite(recipe: Recipe) {
         recipe.isFavorite = !recipe.isFavorite
