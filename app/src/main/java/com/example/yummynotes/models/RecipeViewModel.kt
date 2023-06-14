@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {
-    private val _recipes = MutableStateFlow(listOf<Recipe>())
+    private var _recipes = MutableStateFlow(listOf<Recipe>())
     val recipes: StateFlow<List<Recipe>> = _recipes.asStateFlow()
     /*val recipesList: List<Recipe> = recipes.to
         get() = _recipes.to
@@ -25,7 +25,11 @@ class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {
                     if (listOfRecipes.isNullOrEmpty()) {
                         Log.d("RecipeViewModel", "No Recipes")
                     } else {
-                        _recipes.value = listOfRecipes
+                        val baseRecipes = getRecipes()
+                        for(recipe in baseRecipes){
+                            repository.addRecipe(recipe)
+                        }
+                        _recipes = MutableStateFlow(listOf<Recipe>())
                     }
                 }
         }
