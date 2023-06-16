@@ -15,6 +15,9 @@ interface RecipeDao {
     @Delete
     suspend fun delete(recipe: Recipe)
 
+    @Query("DELETE FROM recipe")
+    suspend fun deleteAllRecipes()
+
     @Query("SELECT * FROM recipe")
     fun getAllRecipes(): Flow<List<Recipe>>
 
