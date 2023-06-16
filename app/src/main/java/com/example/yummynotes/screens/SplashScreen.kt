@@ -41,7 +41,7 @@ fun SplashScreen(navController: NavController){
                 }
             )
         )
-        delay(2500L)
+        delay(500L) //TODO: set to higher value again for final version
         navController.navigate("main")
     }
 

@@ -1,6 +1,7 @@
 package com.example.yummynotes
 
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,7 +19,7 @@ import com.example.yummynotes.ui.theme.YummyNotesTheme
 import kotlinx.coroutines.flow.toList
 
 
-class MainActivity : ComponentActivity() {
+class MainActivity : ComponentActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

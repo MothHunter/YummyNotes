@@ -4,10 +4,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -20,6 +22,7 @@ import com.example.yummynotes.widgets.TopNavigationBar
 fun RecipeScreen(navController: NavController, viewModel: RecipeViewModel, recipeID: Int) {
 
     val recipe = viewModel.getRecipeByID(recipeID)
+    val context = LocalContext.current
 
     Column(modifier = Modifier.fillMaxWidth(),
     verticalArrangement = Arrangement.spacedBy(5.dp)){
@@ -37,7 +40,8 @@ fun RecipeScreen(navController: NavController, viewModel: RecipeViewModel, recip
                 Image(painter = painterResource(id = recipe.images[0]),
                     contentDescription = "Bild von ${recipe.title}",
                     contentScale = ContentScale.Crop,
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier
+                                .fillMaxWidth()
                                 .height(210.dp))
                 Text(text = "Beschreibung",
                     fontSize = 30.sp,
@@ -60,6 +64,11 @@ fun RecipeScreen(navController: NavController, viewModel: RecipeViewModel, recip
                 Text(text =recipe.instructions,
                     fontSize = 20.sp,
                     modifier = Modifier.fillMaxWidth())
+                Button(onClick = {
+                    viewModel.readText(context ,recipe.instructions)
+                }) {
+                    Text(text = "read")
+                }
             }
         }
     }
