@@ -28,6 +28,7 @@ class SeedDatabaseWorker(
     }
 
     private suspend fun populateDatabase(database: RecipeDatabase){
+        Log.d(TAG, "populating database")
         val dao = database.recipeDao()
 
         dao.deleteAllRecipes()

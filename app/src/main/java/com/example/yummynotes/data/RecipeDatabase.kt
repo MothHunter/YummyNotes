@@ -7,12 +7,15 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.yummynotes.models.Recipe
 import com.example.yummynotes.models.getRecipes
+import com.example.yummynotes.workers.SeedDatabaseWorker
 
 @Database(
     entities = [Recipe::class],
-    version = 3,
+    version = 6,
     exportSchema = false
 )
 
@@ -24,28 +27,31 @@ abstract class RecipeDatabase : RoomDatabase() {
         @Volatile
         private var instance: RecipeDatabase? = null
         fun getDatabase(context: Context): RecipeDatabase {
+            Log.d("RecipeDatabase", "getting database...")
             return instance ?: synchronized(this) {
-                // synchronized => cannot be accessed by more than one thread at a time
-                Room.databaseBuilder(context, RecipeDatabase::class.java, "movie_db")
+                // synchronized = only one thread can access this at any time!
+                Room.databaseBuilder(context, RecipeDatabase::class.java, "recipe_db")
                     .addCallback(
                         object : Callback() {
                             override fun onCreate(db: SupportSQLiteDatabase) {
                                 super.onCreate(db)
-                                // TODO: use worker to fill Database
+                                Log.d("RecipeDatabase", "... for the first time")
+                                val workerRequest = OneTimeWorkRequestBuilder<SeedDatabaseWorker>().build()
+                                WorkManager.getInstance(context).enqueue(workerRequest)
 
                             }
 
                             override fun onOpen(db: SupportSQLiteDatabase) {
                                 super.onOpen(db)
-                                // do work on each start
+                                Log.d("RecipeDatabase", "... using existing database")
                             }
                         }
                     )
-                    .fallbackToDestructiveMigration()
+                    .fallbackToDestructiveMigration() // NOTE: this does not re-run the dbWorker!
                     .build()
                     .also {
-                        instance = it   // scope function for setting scope (=???)
-                        Log.d("MovieDatabase", "created")
+                        instance = it
+                        Log.d("RecipeDatabase", "getDatabase function completed")
                     }
             }
         }

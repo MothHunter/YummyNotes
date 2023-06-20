@@ -7,7 +7,7 @@ import com.example.yummynotes.R
 @Entity
 data class Recipe(
     @PrimaryKey (autoGenerate = true)
-    val id: Int = -1,
+    val id: Int = 0,
     var title: String = "Recipe not found!",
     var description: String = "",
     var ingredients: String = "", //später: Klasse ingredients die eine Menge übergeben bekommt
@@ -19,7 +19,6 @@ data class Recipe(
 fun getRecipes(): List<Recipe> {
     return listOf(
         Recipe(
-            id = 0,
             title = "Linsensuppe",
             description = "Suppe mit Linsen",
             ingredients = "Zwiebel, Kümmel, Linsen, Suppenwürfel",
@@ -30,7 +29,6 @@ fun getRecipes(): List<Recipe> {
 
         ),
         Recipe(
-            id = 1,
             title = "Pizza",
             description = "Pizza mit Salami",
             ingredients = "Pizzateig, Tomatensauce, Mozerella, Salami",
@@ -39,7 +37,6 @@ fun getRecipes(): List<Recipe> {
             images = listOf(R.drawable.pizza)
         ),
         Recipe(
-            id = 2,
             title = "Curry",
             description = "Curry mit Huhn",
             ingredients = "Reis, Kokosmilch, Huhn, Mango, Zwiebel",
