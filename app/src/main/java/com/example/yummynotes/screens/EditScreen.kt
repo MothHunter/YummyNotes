@@ -1,16 +1,26 @@
 package com.example.yummynotes.screens
 
+import android.net.Uri
+import android.os.Bundle
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.compose.setContent
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
 import com.example.yummynotes.models.Recipe
 import com.example.yummynotes.models.RecipeViewModel
+import com.example.yummynotes.ui.theme.NewPhotoPickerAndroid13Theme
 import com.example.yummynotes.widgets.TopNavigationBar
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -58,6 +68,16 @@ fun MainContent(recipe: Recipe?) {
     val ingredientsState = remember { mutableStateOf(recipe!!.ingredients) }
     val instructionsState = remember { mutableStateOf(recipe!!.instructions) }
 
+    NewPhotoPickerAndroid13Theme {
+        var selectedImageUri by remember {
+            mutableStateOf<Uri?>(null)
+        }
+
+        val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.PickVisualMedia(),
+            onResult = { uri -> selectedImageUri = uri }
+        )
+
     Column {
         Column(
             modifier = Modifier
@@ -68,10 +88,11 @@ fun MainContent(recipe: Recipe?) {
 
             OutlinedTextField(
                 value = titleState.value,
-                onValueChange = {  titleState.value = it},
+                onValueChange = { titleState.value = it },
                 modifier = Modifier.fillMaxWidth(),
                 label = {
-                    Text(text = "title")}
+                    Text(text = "title")
+                }
             )
             Spacer(modifier = Modifier.padding(10.dp))
             OutlinedTextField(
@@ -79,15 +100,17 @@ fun MainContent(recipe: Recipe?) {
                 onValueChange = { descriptionState.value = it },
                 modifier = Modifier.fillMaxWidth(),
                 label = {
-                    Text(text = "description")}
+                    Text(text = "description")
+                }
             )
             Spacer(modifier = Modifier.padding(10.dp))
             OutlinedTextField(
                 value = ingredientsState.value,
-                onValueChange = { ingredientsState.value = it},
+                onValueChange = { ingredientsState.value = it },
                 modifier = Modifier.fillMaxWidth(),
                 label = {
-                    Text(text = "ingredients")}
+                    Text(text = "ingredients")
+                }
             )
             Spacer(modifier = Modifier.padding(10.dp))
             OutlinedTextField(
@@ -95,14 +118,47 @@ fun MainContent(recipe: Recipe?) {
                 onValueChange = { instructionsState.value = it },
                 modifier = Modifier.fillMaxWidth(),
                 label = {
-                    Text(text = "instructions")}
+                    Text(text = "instructions")
+                }
             )
             Spacer(modifier = Modifier.padding(10.dp))
 
+            }
+            Spacer(modifier = Modifier.padding(10.dp))
+
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+            item {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    Button(onClick = {
+                        singlePhotoPickerLauncher.launch(
+                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                        )
+                    }) {
+                        Text(text = "Pick one photo")
+                    }
+
+
+                }
+            }
+
+            item {
+                AsyncImage(
+                    model = selectedImageUri,
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxWidth(),
+                    contentScale = ContentScale.Crop
+                )
+            }
 
 
         }
-    }}
+        }}}
 
 /*
 
