@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.yummynotes.models.RecipeViewModel
+import com.example.yummynotes.navigation.Screen
 import com.example.yummynotes.widgets.SimpleTopAppBar
 import com.example.yummynotes.widgets.TopNavigationBar
 
@@ -35,7 +36,9 @@ fun RecipeScreen(navController: NavController, viewModel: RecipeViewModel, recip
         SimpleTopAppBar(
             title = recipe!!.title,
             arrowBackClicked = { navController.popBackStack() },
-            content = { EditButton() }
+            content = { EditButton() {
+                navController.navigate(Screen.AddScreen.withId(recipeID))
+            } }
         )
         Box {
             Column(
