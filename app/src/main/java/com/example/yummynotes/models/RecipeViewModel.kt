@@ -22,18 +22,12 @@ class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {
     val recipes: List<Recipe>
         get() = _recipes*/
 
-    // TODO: BAD!!! use worker in RecipeDatabase.onCreate!!!!
-    suspend fun addRecipes(){
-        if (recipes.value.none{it.title == "Linsensuppe"}){
-            getRecipes().forEach{ recipe -> repository.addRecipe(recipe)}
-        }
-    }
 
     init {
         viewModelScope.launch {
             //Log.d("HomeScreenVM", "add movies completed")
             Log.d("HomeScreenVM", "coroutine launched")
-            //addRecipes()
+
             repository.getAllRecipes().collect { movieList ->
                 _recipes.value = movieList
             }

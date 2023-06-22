@@ -13,7 +13,7 @@ data class Recipe(
     var ingredients: String = "", //später: Klasse ingredients die eine Menge übergeben bekommt
     var instructions: String = "",
     val images: List<Int> = emptyList(), //noch korrigieren weil wir nicht urls haben
-//    val category: List<Categories> = listOf(),
+    val category: List<Categories> = listOf(),
     var isFavorite: Boolean = false // --,> das wird bei der Datenbank relevant
 )
 
@@ -25,6 +25,7 @@ fun getRecipes(): List<Recipe> {
             ingredients = "Zwiebel, Kümmel, Linsen, Suppenwürfel",
             instructions = "alles in dem Topf 19 Minuten kochen",
             isFavorite = false,
+            category = listOf(Categories.HAUPTSPEISEN, Categories.SUPPEN, Categories.VEGETARISCH),
             images = listOf(R.drawable.linsensuppe)
 
 
@@ -35,6 +36,7 @@ fun getRecipes(): List<Recipe> {
             ingredients = "Pizzateig, Tomatensauce, Mozerella, Salami",
             instructions = "Die Pizza bei 180 Grad in den Ofen schieben",
             isFavorite = false,
+            category = listOf(Categories.HAUPTSPEISEN, Categories.MEDITERRAN, Categories.FLEISCH),
             images = listOf(R.drawable.pizza)
         ),
         Recipe(
@@ -43,6 +45,7 @@ fun getRecipes(): List<Recipe> {
             ingredients = "Reis, Kokosmilch, Huhn, Mango, Zwiebel",
             instructions = "Den Reis in dem Topf Kochen. In der Pfanne die restlichen Zutaten anbraten und anschließend alles vermischen",
             isFavorite = false,
+            category = listOf(Categories.HAUPTSPEISEN, Categories.FLEISCH),
             images = listOf(R.drawable.curry)
         ),
     )

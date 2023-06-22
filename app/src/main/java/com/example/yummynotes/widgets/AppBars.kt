@@ -27,7 +27,7 @@ val NavItems = listOf(
     ),
     NavItem(
         name = "Create",
-        route = "add",
+        route = "add/-1",
         icon = Icons.Rounded.Add,
     )
 

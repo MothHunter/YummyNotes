@@ -40,10 +40,12 @@ fun Navigation() {
                     recipeID = backStackEntry.arguments?.getInt("recipeID") ?: 0)
         }
 
-        composable(route = Screen.AddScreen.route){
+        composable(route = Screen.AddScreen.route,
+            arguments = listOf(navArgument(name = "recipeID") {type = NavType.IntType}))
+        {
                 backStackEntry ->
                     AddScreen(navController = navController,
-                                    viewModel = viewModel)
+                        recipeID = backStackEntry.arguments?.getInt("recipeID") ?: 0)
         }
         composable(route = Screen.SplashScreen.route){
             SplashScreen(navController = navController)

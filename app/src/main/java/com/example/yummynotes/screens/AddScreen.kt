@@ -12,17 +12,24 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.example.yummynotes.models.AddEditScreenViewModel
 import com.example.yummynotes.models.Recipe
 import com.example.yummynotes.models.RecipeViewModel
+import com.example.yummynotes.utils.Injector
 import com.example.yummynotes.widgets.SimpleTopAppBar
 import com.example.yummynotes.widgets.TopNavigationBar
 import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
-fun AddScreen(viewModel: RecipeViewModel, navController: NavHostController) {
+fun AddScreen(navController: NavHostController, recipeID: Int) {
+    val viewModel: AddEditScreenViewModel = viewModel(
+        factory = Injector.provideAddEditScreenViewModelFactory(LocalContext.current,
+            recipeID = recipeID))
     val isButtonEnabledFlow = remember { MutableStateFlow(false) }
     val isButtonEnabled by isButtonEnabledFlow.collectAsState()
     Column{

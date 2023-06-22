@@ -11,5 +11,9 @@ sealed class Screen(val route: String) {
         }
     }
 
-    object AddScreen : Screen("add")
+    object AddScreen : Screen("add/{recipeID}") {
+        fun withId(recipeID: Int): String {
+            return this.route.replace(oldValue = "{recipeID}", newValue = recipeID.toString())
+        }
+    }
 }

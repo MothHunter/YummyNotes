@@ -15,7 +15,7 @@ import com.example.yummynotes.workers.SeedDatabaseWorker
 
 @Database(
     entities = [Recipe::class],
-    version = 6,
+    version = 7,
     exportSchema = false
 )
 
