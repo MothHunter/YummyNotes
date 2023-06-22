@@ -11,5 +11,5 @@ sealed class Screen(val route: String) {
         }
     }
 
-    object EditAndAddScreen : Screen("editandadd")
+    object AddScreen : Screen("add")
 }

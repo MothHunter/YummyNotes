@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.yummynotes.models.RecipeViewModel
+import com.example.yummynotes.widgets.SimpleTopAppBar
 import com.example.yummynotes.widgets.TopNavigationBar
 
 @Composable
@@ -26,7 +27,11 @@ fun RecipeScreen(navController: NavController, viewModel: RecipeViewModel, recip
 
     Column(modifier = Modifier.fillMaxWidth(),
     verticalArrangement = Arrangement.spacedBy(5.dp)){
-        TopNavigationBar(recipe!!.title, navController)
+        SimpleTopAppBar(
+            title = recipe!!.title,
+            arrowBackClicked = { navController.popBackStack() },
+            content = { /* Custom content here */ }
+        )
         Box {
             Column(
                 modifier = Modifier

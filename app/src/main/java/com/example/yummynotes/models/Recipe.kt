@@ -13,6 +13,7 @@ data class Recipe(
     var ingredients: String = "", //später: Klasse ingredients die eine Menge übergeben bekommt
     var instructions: String = "",
     val images: List<Int> = emptyList(), //noch korrigieren weil wir nicht urls haben
+//    val category: List<Categories> = listOf(),
     var isFavorite: Boolean = false // --,> das wird bei der Datenbank relevant
 )
 

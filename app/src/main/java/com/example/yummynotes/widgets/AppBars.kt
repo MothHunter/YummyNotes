@@ -1,6 +1,7 @@
 package com.example.yummynotes.widgets
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -9,10 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.IconButton
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 
 
 val NavItems = listOf(
@@ -23,11 +27,45 @@ val NavItems = listOf(
     ),
     NavItem(
         name = "Create",
-        route = "editandadd",
+        route = "add",
         icon = Icons.Rounded.Add,
     )
 
 )
+
+@Composable
+fun SimpleTopAppBar(
+    title: String,
+    arrowBackClicked: () -> Unit = {},
+    content: @Composable () -> Unit
+) {
+    TopAppBar(
+        backgroundColor = Color.DarkGray,
+        title = {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Start
+            ) {
+                Text(text = title, color = Color.White, modifier = Modifier.offset(80.dp,0.dp))
+            }
+        },
+        navigationIcon = {
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = "Arrow back",
+                tint = Color.White,
+                modifier = Modifier.padding(5.dp).clickable {
+                    arrowBackClicked()
+                }
+            )
+        },
+        actions = {
+            content()
+        }
+    )
+}
+
+
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable

@@ -42,6 +42,7 @@ class RecipeViewModel(private val repository: RecipeRepository) : ViewModel() {
 
    fun getRecipeByID(recipeID: Int): Recipe {
         //recipeID.let {
+            Log.d("recipeID", recipeID.toString())
             return (_recipes.value.filter { it.id == recipeID })[0]
         //}
     }

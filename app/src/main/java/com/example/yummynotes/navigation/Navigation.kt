@@ -9,12 +9,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.yummynotes.data.RecipeDatabase
-import com.example.yummynotes.models.AddAndEditScreenViewModel
 import com.example.yummynotes.models.RecipeViewModel
 import com.example.yummynotes.models.RecipeViewModelFactory
 import com.example.yummynotes.navigation.Screen
 import com.example.yummynotes.repository.RecipeRepository
-import com.example.yummynotes.screens.EditAndAddScreen
+import com.example.yummynotes.screens.AddScreen
 import com.example.yummynotes.screens.RecipeScreen
 import com.example.yummynotes.screens.SplashScreen
 
@@ -41,11 +40,10 @@ fun Navigation() {
                     recipeID = backStackEntry.arguments?.getInt("recipeID") ?: 0)
         }
 
-        composable(route = Screen.EditAndAddScreen.route){
+        composable(route = Screen.AddScreen.route){
                 backStackEntry ->
-                    EditAndAddScreen(navController = navController,
-                                    viewModel = viewModel,
-                                     recipeID = backStackEntry.arguments?.getInt("recipeID") ?: 0)
+                    AddScreen(navController = navController,
+                                    viewModel = viewModel)
         }
         composable(route = Screen.SplashScreen.route){
             SplashScreen(navController = navController)

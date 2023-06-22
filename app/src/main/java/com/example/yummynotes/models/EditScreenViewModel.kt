@@ -1,12 +1,10 @@
 package com.example.yummynotes.models
 
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class AddAndEditScreenViewModel() : ViewModel() {
+class EditScreenViewModel() : ViewModel() {
     var title = mutableStateOf("")
     var description = mutableStateOf("")
     var ingredients = mutableStateOf("")
