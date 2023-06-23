@@ -52,7 +52,7 @@ fun AddScreen(navController: NavHostController, recipeID: Int) {
         )
 
         MainContent(viewModel)
-
+/*
         Button(
             enabled = isButtonEnabled,
             onClick = { /* Handle button click */ },
@@ -62,6 +62,8 @@ fun AddScreen(navController: NavHostController, recipeID: Int) {
         ) {
             Text(text = "REZEPT HINZUFÜGEN")
         }
+
+ */
 
     }
 }
