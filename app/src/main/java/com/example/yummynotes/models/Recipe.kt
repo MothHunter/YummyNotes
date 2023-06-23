@@ -8,7 +8,7 @@ import com.example.yummynotes.R
 data class Recipe(
     @PrimaryKey (autoGenerate = true)
     val id: Int = 0,
-    var title: String = "Recipe not found!",
+    var title: String = "",
     var description: String = "",
     var ingredients: String = "", //später: Klasse ingredients die eine Menge übergeben bekommt
     var instructions: String = "",
