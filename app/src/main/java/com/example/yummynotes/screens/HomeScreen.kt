@@ -1,5 +1,7 @@
 package com.example.yummynotes
 
+import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -30,6 +32,7 @@ import com.example.yummynotes.data.RecipeDao
 import com.example.yummynotes.models.Recipe
 import com.example.yummynotes.models.RecipeViewModel
 import com.example.yummynotes.models.getRecipes
+import com.example.yummynotes.models.resourceUri
 
 import com.example.yummynotes.widgets.TopNavigationBar
 
@@ -130,6 +133,7 @@ fun RecipeRow(recipe: Recipe,
                     .width(200.dp)
 
             ) {
+                Log.d("HomeScreen", "URI from id: ${LocalContext.current.resourceUri(imageID)}")
                 Image(painter = painterResource(id = imageID),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,

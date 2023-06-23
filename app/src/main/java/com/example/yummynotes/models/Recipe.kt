@@ -1,5 +1,8 @@
 package com.example.yummynotes.models
 
+import android.content.ContentResolver
+import android.content.Context
+import android.net.Uri
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.yummynotes.R
@@ -23,6 +26,17 @@ data class Recipe(
     override fun equals(other: Any?): Boolean {
         return super.equals(other)
     }
+}
+
+// Usage in Composable:
+// val imageUri = LocalContext.current.resourceUri(imageID)
+fun Context.resourceUri(resourceId: Int): Uri = with(resources) {
+    Uri.Builder()
+        .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+        .authority(getResourcePackageName(resourceId))
+        .appendPath(getResourceTypeName(resourceId))
+        .appendPath(getResourceEntryName(resourceId))
+        .build()
 }
 
 
