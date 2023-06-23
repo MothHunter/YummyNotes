@@ -15,8 +15,11 @@ data class Recipe(
     val images: List<Int> = emptyList(), //noch korrigieren weil wir nicht urls haben
     val category: List<Categories> = listOf(),
     var isFavorite: Boolean = false // --,> das wird bei der Datenbank relevant
-)
+){
 
+override fun equals(other: Any?): Boolean {
+    return super.equals(other)
+}}
 fun getRecipes(): List<Recipe> {
     return listOf(
         Recipe(

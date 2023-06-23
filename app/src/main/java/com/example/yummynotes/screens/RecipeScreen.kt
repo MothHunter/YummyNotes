@@ -34,7 +34,7 @@ fun RecipeScreen(navController: NavController, viewModel: RecipeViewModel, recip
     Column(modifier = Modifier.fillMaxWidth(),
     verticalArrangement = Arrangement.spacedBy(5.dp)){
         SimpleTopAppBar(
-            title = recipe!!.title,
+            title = recipe.title,
             arrowBackClicked = { navController.popBackStack() },
             content = { EditButton() {
                 navController.navigate(Screen.AddScreen.withId(recipeID))
