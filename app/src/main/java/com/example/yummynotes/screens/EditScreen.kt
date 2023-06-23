@@ -33,7 +33,7 @@ fun EditAndAddScreen(viewModel: RecipeViewModel, navController: NavHostControlle
     val isButtonEnabledFlow = remember { MutableStateFlow(false) }
     val isButtonEnabled by isButtonEnabledFlow.collectAsState()
     Column{
-        TopNavigationBar("Edit or Add", navController)
+        TopNavigationBar("Rezept bearbeiten", navController)
         MainContent(recipe)
 
         Button(
@@ -42,7 +42,7 @@ fun EditAndAddScreen(viewModel: RecipeViewModel, navController: NavHostControlle
             modifier = Modifier.padding(16.dp)
                 .fillMaxWidth()
         ) {
-            Text(text = "ADD/EDIT")
+            Text(text = "REZEPT BEARBEITEN")
         }
 
     }
@@ -91,7 +91,7 @@ fun MainContent(recipe: Recipe?) {
                 onValueChange = { titleState.value = it },
                 modifier = Modifier.fillMaxWidth(),
                 label = {
-                    Text(text = "title")
+                    Text(text = "Titel")
                 }
             )
             Spacer(modifier = Modifier.padding(10.dp))
@@ -100,7 +100,7 @@ fun MainContent(recipe: Recipe?) {
                 onValueChange = { descriptionState.value = it },
                 modifier = Modifier.fillMaxWidth(),
                 label = {
-                    Text(text = "description")
+                    Text(text = "Beschreibung")
                 }
             )
             Spacer(modifier = Modifier.padding(10.dp))
@@ -109,7 +109,7 @@ fun MainContent(recipe: Recipe?) {
                 onValueChange = { ingredientsState.value = it },
                 modifier = Modifier.fillMaxWidth(),
                 label = {
-                    Text(text = "ingredients")
+                    Text(text = "Zutaten")
                 }
             )
             Spacer(modifier = Modifier.padding(10.dp))
@@ -118,7 +118,7 @@ fun MainContent(recipe: Recipe?) {
                 onValueChange = { instructionsState.value = it },
                 modifier = Modifier.fillMaxWidth(),
                 label = {
-                    Text(text = "instructions")
+                    Text(text = "Anleitung")
                 }
             )
             Spacer(modifier = Modifier.padding(10.dp))
@@ -140,7 +140,7 @@ fun MainContent(recipe: Recipe?) {
                             PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
                         )
                     }) {
-                        Text(text = "Pick one photo")
+                        Text(text = "Wähle ein Bild")
                     }
 
 
