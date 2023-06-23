@@ -1,24 +1,39 @@
 package com.example.yummynotes.models
 
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.yummynotes.repository.RecipeRepository
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
+
+@OptIn(ExperimentalCoroutinesApi::class)
 class AddEditScreenViewModel(private val repository: RecipeRepository, val recipeID: Int): ViewModel() {
     val recipeState = MutableStateFlow(Recipe())
-    val titleState = MutableStateFlow("")
+
+    // solution explained at
+    // https://medium.com/androiddevelopers/effective-state-management-for-textfield-in-compose-d6e5b070fbe5
+    // needs imports: import androidx.compose.runtime.setValue / .getValue
+    var title by mutableStateOf("")
+    var description by mutableStateOf("")
+    var ingredients by mutableStateOf("")
+    var instructions by mutableStateOf("")
 
     init {
         viewModelScope.launch {
             if (recipeID >= 0) {
                 repository.getRecipeById(recipeID).collect {
-                    //TODO: this should probably be made null-safe
-                    //      but that then needs to be change also in repository, etc.
                     recipeState.value = it
-                    titleState.value = it.title
+                    title = it.title
+                    description = it.description
+                    ingredients = it.ingredients
+                    instructions = it.instructions
 
                 }
             }

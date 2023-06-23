@@ -68,8 +68,8 @@ fun MainContent(viewModel: AddEditScreenViewModel) {
         ) {
 
             OutlinedTextField(
-                value = titleState,
-                onValueChange = {  titleState = it},
+                value = viewModel.title,
+                onValueChange = {  viewModel.title = it},
                 modifier = Modifier.fillMaxWidth(),
                 label = {
                     Text(text = "title")
@@ -77,8 +77,8 @@ fun MainContent(viewModel: AddEditScreenViewModel) {
             )
             Spacer(modifier = Modifier.padding(10.dp))
             OutlinedTextField(
-                value = descriptionState,
-                onValueChange = { descriptionState = it },
+                value = viewModel.description,
+                onValueChange = { viewModel.description = it },
                 modifier = Modifier.fillMaxWidth(),
                 label = {
                     Text(text = "description")
@@ -86,8 +86,8 @@ fun MainContent(viewModel: AddEditScreenViewModel) {
             )
             Spacer(modifier = Modifier.padding(10.dp))
             OutlinedTextField(
-                value = ingredientsState,
-                onValueChange = { ingredientsState = it},
+                value = viewModel.ingredients,
+                onValueChange = { viewModel.ingredients = it},
                 modifier = Modifier.fillMaxWidth(),
                 label = {
                     Text(text = "ingredients")
@@ -95,8 +95,8 @@ fun MainContent(viewModel: AddEditScreenViewModel) {
             )
             Spacer(modifier = Modifier.padding(10.dp))
             OutlinedTextField(
-                value = instructionsState,
-                onValueChange = { instructionsState = it },
+                value = viewModel.instructions,
+                onValueChange = { viewModel.instructions = it },
                 modifier = Modifier.fillMaxWidth(),
                 label = {
                     Text(text = "instructions")
