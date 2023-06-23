@@ -5,7 +5,6 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
@@ -21,37 +20,36 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.yummynotes.models.AddEditScreenViewModel
+import com.example.yummynotes.models.NEW_RECIPE
 import com.example.yummynotes.ui.theme.NewPhotoPickerAndroid13Theme
 import com.example.yummynotes.utils.Injector
 import com.example.yummynotes.widgets.SimpleTopAppBar
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @Composable
 fun AddScreen(navController: NavHostController, recipeID: Int) {
     val viewModel: AddEditScreenViewModel = viewModel(
-        factory = Injector.provideAddEditScreenViewModelFactory(LocalContext.current,
-            recipeID = recipeID))
-    val isButtonEnabledFlow = remember { MutableStateFlow(false) }
-    val isButtonEnabled by isButtonEnabledFlow.collectAsState()
+        factory = Injector.provideAddEditScreenViewModelFactory(
+            LocalContext.current,
+            recipeID = recipeID
+        )
+    )
 
-    Column{
+    Column {
         SimpleTopAppBar(
-            title = "Add a Recipe",
+            title = if (recipeID == NEW_RECIPE) {
+                "Add a Recipe"
+            } else {
+                "Edit Recipe"
+            },
             arrowBackClicked = { navController.popBackStack() },
             content = { /* Custom content here */ }
         )
 
         MainContent(viewModel)
-
-        Button(
-            enabled = isButtonEnabled,
-            onClick = { /* Handle button click */ },
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth()
-        ) {
-            Text(text = "ADD RECIPE")
-        }
 
     }
 }
@@ -59,10 +57,10 @@ fun AddScreen(navController: NavHostController, recipeID: Int) {
 @Composable
 fun MainContent(viewModel: AddEditScreenViewModel) {
     val recipe = viewModel.recipeState.collectAsState()
-    var titleState by remember { mutableStateOf(viewModel.recipeState.value.title) }
-    var descriptionState by remember { mutableStateOf(recipe.value.description) }
-    var ingredientsState by remember { mutableStateOf(viewModel.recipeState.value.ingredients) }
-    var instructionsState by remember { mutableStateOf(viewModel.recipeState.value.instructions) }
+    val isButtonEnabledFlow = remember { MutableStateFlow(false) }
+    val isButtonEnabled by isButtonEnabledFlow.collectAsState()
+
+    val coroutineScope = rememberCoroutineScope()
 
     NewPhotoPickerAndroid13Theme {
         var selectedImageUri by remember {
@@ -74,78 +72,104 @@ fun MainContent(viewModel: AddEditScreenViewModel) {
             onResult = { uri -> selectedImageUri = uri }
         )
 
-    Column {
-        Column(
-            modifier = Modifier
-                .verticalScroll(rememberScrollState())
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.Start
-        ) {
+        Column {
+            Column(
+                modifier = Modifier
+                    .verticalScroll(rememberScrollState())
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.Start
+            ) {
 
-            OutlinedTextField(
-                value = viewModel.title,
-                onValueChange = {  viewModel.title = it},
-                modifier = Modifier.fillMaxWidth(),
-                label = {
-                    Text(text = "title")
-                }
-            )
-            Spacer(modifier = Modifier.padding(10.dp))
-            OutlinedTextField(
-                value = viewModel.description,
-                onValueChange = { viewModel.description = it },
-                modifier = Modifier.fillMaxWidth(),
-                label = {
-                    Text(text = "description")
-                }
-            )
-            Spacer(modifier = Modifier.padding(10.dp))
-            OutlinedTextField(
-                value = viewModel.ingredients,
-                onValueChange = { viewModel.ingredients = it},
-                modifier = Modifier.fillMaxWidth(),
-                label = {
-                    Text(text = "ingredients")
-                }
-            )
-            Spacer(modifier = Modifier.padding(10.dp))
-            OutlinedTextField(
-                value = viewModel.instructions,
-                onValueChange = { viewModel.instructions = it },
-                modifier = Modifier.fillMaxWidth(),
-                label = {
-                    Text(text = "instructions")
-                }
-            )
-            Spacer(modifier = Modifier.padding(10.dp))
-
-
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceAround
-                    ) {
-                        Button(onClick = {
-                            singlePhotoPickerLauncher.launch(
-                                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                            )
-                        }) {
-                            Text(text = "Pick one photo")
-                        }
+                OutlinedTextField(
+                    value = viewModel.title,
+                    onValueChange = { viewModel.title = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    label = {
+                        Text(text = "title")
+                    }
+                )
+                Spacer(modifier = Modifier.padding(10.dp))
+                OutlinedTextField(
+                    value = viewModel.description,
+                    onValueChange = { viewModel.description = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    label = {
+                        Text(text = "description")
+                    }
+                )
+                Spacer(modifier = Modifier.padding(10.dp))
+                OutlinedTextField(
+                    value = viewModel.ingredients,
+                    onValueChange = { viewModel.ingredients = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    label = {
+                        Text(text = "ingredients")
+                    }
+                )
+                Spacer(modifier = Modifier.padding(10.dp))
+                OutlinedTextField(
+                    value = viewModel.instructions,
+                    onValueChange = { viewModel.instructions = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    label = {
+                        Text(text = "instructions")
+                    }
+                )
+                Spacer(modifier = Modifier.padding(10.dp))
 
 
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    Button(onClick = {
+                        singlePhotoPickerLauncher.launch(
+                            PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                        )
+                    }) {
+                        Text(text = "Pick one photo")
                     }
 
+
+                }
+                Box(
+                    modifier = Modifier
+                        .size(130.dp, 100.dp)
+                        .align(Alignment.CenterHorizontally)
+                ) {
                     AsyncImage(
                         model = selectedImageUri,
                         contentDescription = null,
                         modifier = Modifier.fillMaxWidth(),
                         contentScale = ContentScale.Crop
                     )
+                }
 
 
 
+                Button(
+                    enabled = viewModel.buttonEnabled,
+                    onClick = {
+                        coroutineScope.launch {
+                            viewModel.onAddEditButtonClick()
+                        }
+                    },
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .fillMaxWidth()
+                ) {
+                    Text(
+                        text = if (viewModel.recipeID == NEW_RECIPE) {
+                            "ADD RECIPE"
+                        } else {
+                            "SAVE CHANGES"
+                        }
+                    )
+                }
             }
-        }}}
+        }
+    }
+}
 
 

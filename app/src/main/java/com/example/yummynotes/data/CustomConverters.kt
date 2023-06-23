@@ -10,7 +10,10 @@ class CustomConverters {
     }
     @TypeConverter
     fun stringToIntList(string: String) : List<Int> {
-        return string.split(";").map { it.toInt() }
+        if(string.isNotEmpty()) {
+            return string.split(";").map { it.toInt() }
+        }
+        return emptyList()
     }
 
     @TypeConverter
@@ -20,10 +23,12 @@ class CustomConverters {
 
     @TypeConverter
     fun stringToCategoryList(string: String) :List<Categories> {
-        val substrings = string.split(";")
         var catList = listOf<Categories>().toMutableList()
-        for (sub in substrings) {
-            catList.add(Categories.valueOf(sub))
+        if(string.isNotEmpty()) {
+            val substrings = string.split(";")
+            for (sub in substrings) {
+                catList.add(Categories.valueOf(sub))
+            }
         }
         return catList
     }

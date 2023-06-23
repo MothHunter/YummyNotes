@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.yummynotes.R
 
+const val NEW_RECIPE = -1
 @Entity
 data class Recipe(
     @PrimaryKey (autoGenerate = true)
@@ -12,6 +13,8 @@ data class Recipe(
     var description: String = "",
     var ingredients: String = "", //später: Klasse ingredients die eine Menge übergeben bekommt
     var instructions: String = "",
+    // TODO: image references need to be changed from Int to URI everywhere
+    //  to be able to add new images!!
     val images: List<Int> = emptyList(), //noch korrigieren weil wir nicht urls haben
     val category: List<Categories> = listOf(),
     var isFavorite: Boolean = false // --,> das wird bei der Datenbank relevant

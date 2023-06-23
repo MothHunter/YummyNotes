@@ -1,6 +1,7 @@
 package com.example.yummynotes.models
 
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,10 +25,14 @@ class AddEditScreenViewModel(private val repository: RecipeRepository, val recip
     var description by mutableStateOf("")
     var ingredients by mutableStateOf("")
     var instructions by mutableStateOf("")
+    // TODO: change initial value to false as soon as input validation is implemented
+    var buttonEnabled by mutableStateOf(true)
+
+    // TODO: add fields for images and categories
 
     init {
         viewModelScope.launch {
-            if (recipeID >= 0) {
+            if (recipeID != NEW_RECIPE) {
                 repository.getRecipeById(recipeID).collect {
                     recipeState.value = it
                     title = it.title
@@ -40,46 +45,48 @@ class AddEditScreenViewModel(private val repository: RecipeRepository, val recip
         }
     }
 
+    // TODO: validate values!
 
-    suspend fun addRecipe(
-        title: String,
-        description: String,
-        ingredients: String,
-        instructions: String,
-        images: List<Int>,
-        categories: List<Categories>,
-        isFavorite: Boolean
-    ) {
+
+    suspend fun onAddEditButtonClick() {
+
+
+        if (recipeID == NEW_RECIPE) {
+            addRecipe()
+        } else {
+            updateRecipe()
+        }
+
+    }
+
+
+    suspend fun addRecipe() {
         val newRecipe = Recipe(
             title = title,
             description = description,
             ingredients = ingredients,
             instructions = instructions,
-            images = images,
-            category = categories,
-            isFavorite = isFavorite
+            images = listOf<Int>(),
+            category = emptyList(),
+            isFavorite = false
         )
         repository.addRecipe(newRecipe)
     }
 
 
-    suspend fun updateRecipe(
-        title: String,
-        description: String,
-        ingredients: String,
-        instructions: String,
-        images: List<Int>,
-        categories: List<Categories>,
-        isFavorite: Boolean
-    ) {
+    suspend fun updateRecipe() {
         val updatedRecipe = recipeState.value.copy(
             title = title,
             description = description,
             ingredients = ingredients,
             instructions = instructions,
+            // TODO: this needs to be included, but fields currently still missing
+            /*
             images = images,
             category = categories,
             isFavorite = isFavorite
+
+             */
         )
 
         repository.updateRecipe(updatedRecipe)
