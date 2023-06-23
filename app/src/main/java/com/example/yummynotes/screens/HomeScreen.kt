@@ -82,6 +82,11 @@ fun RecipeRow(recipe: Recipe,
               onRecipeClick: (Int) -> Unit,
               onFavIconClick: (Recipe) -> Unit = {}
 ) { //später werden mehrere Parameter eingefügt
+    var imageID: Int = if (recipe.images.isEmpty()) {
+        R.drawable.no_photos
+    } else {
+        recipe.images[0]
+    }
 
     Card(modifier = Modifier
         .fillMaxWidth()
@@ -125,7 +130,7 @@ fun RecipeRow(recipe: Recipe,
                     .width(200.dp)
 
             ) {
-                Image(painter = painterResource(id = recipe.images[0]),
+                Image(painter = painterResource(id = imageID),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier

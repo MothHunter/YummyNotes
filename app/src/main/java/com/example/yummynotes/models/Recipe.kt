@@ -17,9 +17,12 @@ data class Recipe(
     var isFavorite: Boolean = false // --,> das wird bei der Datenbank relevant
 ){
 
-override fun equals(other: Any?): Boolean {
-    return super.equals(other)
-}}
+    override fun equals(other: Any?): Boolean {
+        return super.equals(other)
+    }
+}
+
+
 fun getRecipes(): List<Recipe> {
     return listOf(
         Recipe(

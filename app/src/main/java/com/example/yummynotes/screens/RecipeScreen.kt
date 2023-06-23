@@ -23,6 +23,7 @@ import androidx.navigation.NavController
 import com.example.yummynotes.models.RecipeViewModel
 import com.example.yummynotes.navigation.Screen
 import com.example.yummynotes.widgets.SimpleTopAppBar
+import com.example.yummynotes.R
 import com.example.yummynotes.widgets.TopNavigationBar
 
 @Composable
@@ -30,15 +31,24 @@ fun RecipeScreen(navController: NavController, viewModel: RecipeViewModel, recip
 
     val recipe = viewModel.getRecipeByID(recipeID)
     val context = LocalContext.current
+    var imageID: Int = if (recipe.images.isEmpty()) {
+        R.drawable.no_photos
+    } else {
+        recipe.images[0]
+    }
 
-    Column(modifier = Modifier.fillMaxWidth(),
-    verticalArrangement = Arrangement.spacedBy(5.dp)){
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(5.dp)
+    ) {
         SimpleTopAppBar(
             title = recipe.title,
             arrowBackClicked = { navController.popBackStack() },
-            content = { EditButton() {
-                navController.navigate(Screen.AddScreen.withId(recipeID))
-            } }
+            content = {
+                EditButton() {
+                    navController.navigate(Screen.AddScreen.withId(recipeID))
+                }
+            }
         )
         Box {
             Column(
@@ -46,39 +56,55 @@ fun RecipeScreen(navController: NavController, viewModel: RecipeViewModel, recip
                     .fillMaxWidth()
                     .verticalScroll(rememberScrollState()),
             ) {
-                Text(text =recipe.title,
+                Text(
+                    text = recipe.title,
                     fontSize = 40.sp,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth())
-                Image(painter = painterResource(id = recipe.images[0]),
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Image(
+                    painter = painterResource(id = imageID),
                     contentDescription = "Bild von ${recipe.title}",
                     contentScale = ContentScale.Crop,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(210.dp))
-                Text(text = "Beschreibung",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(210.dp)
+                )
+                Text(
+                    text = "Beschreibung",
                     fontSize = 30.sp,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth())
-                Text(text =recipe.description,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Text(
+                    text = recipe.description,
                     fontSize = 20.sp,
-                    modifier = Modifier.fillMaxWidth())
-                Text(text = "Zutaten",
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Text(
+                    text = "Zutaten",
                     fontSize = 30.sp,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth())
-                Text(text = recipe.ingredients.replace(", ", "\n"),
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Text(
+                    text = recipe.ingredients.replace(", ", "\n"),
                     fontSize = 20.sp,
-                    modifier = Modifier.fillMaxWidth())
-                Text(text = "Anleitung",
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Text(
+                    text = "Anleitung",
                     fontSize = 30.sp,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth())
-                Text(text =recipe.instructions,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Text(
+                    text = recipe.instructions,
                     fontSize = 20.sp,
-                    modifier = Modifier.fillMaxWidth())
+                    modifier = Modifier.fillMaxWidth()
+                )
                 Button(onClick = {
-                    viewModel.readText(context ,recipe.instructions)
+                    viewModel.readText(context, recipe.instructions)
                 }) {
                     Text(text = "read")
                 }
@@ -88,7 +114,7 @@ fun RecipeScreen(navController: NavController, viewModel: RecipeViewModel, recip
 }
 
 @Composable
-fun EditButton (
+fun EditButton(
     onClick: () -> Unit = {}
 ) {
     Icon(
