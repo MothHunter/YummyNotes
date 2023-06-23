@@ -44,7 +44,7 @@ import kotlinx.coroutines.launch
 fun HomeScreen(navController: NavController, viewModel: RecipeViewModel) {
 
     Column{
-        TopNavigationBar("Home", navController)
+        TopNavigationBar("Meine Rezepte", navController)
         RecipeList(viewModel = viewModel, navController = navController)
     }
 }
@@ -116,7 +116,7 @@ fun RecipeRow(recipe: Recipe,
                 Spacer(modifier= Modifier.width(5.dp))
 
                 Icon(imageVector = Icons.Default.FavoriteBorder,
-                    contentDescription = "Favorites",
+                    contentDescription = "Lieblingsrezepte",
                     modifier = Modifier.clickable {  }
                 )
 

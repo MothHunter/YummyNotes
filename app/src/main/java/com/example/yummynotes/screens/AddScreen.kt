@@ -31,6 +31,8 @@ import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @Composable
 fun AddScreen(navController: NavHostController, recipeID: Int) {
+    val isButtonEnabledFlow = remember { MutableStateFlow(false) }
+    val isButtonEnabled by isButtonEnabledFlow.collectAsState()
     val viewModel: AddEditScreenViewModel = viewModel(
         factory = Injector.provideAddEditScreenViewModelFactory(
             LocalContext.current,
@@ -41,15 +43,25 @@ fun AddScreen(navController: NavHostController, recipeID: Int) {
     Column {
         SimpleTopAppBar(
             title = if (recipeID == NEW_RECIPE) {
-                "Add a Recipe"
+                "Rezept hinzufügen"
             } else {
-                "Edit Recipe"
+                "Rezept bearbeiten"
             },
             arrowBackClicked = { navController.popBackStack() },
             content = { /* Custom content here */ }
         )
 
         MainContent(viewModel)
+
+        Button(
+            enabled = isButtonEnabled,
+            onClick = { /* Handle button click */ },
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
+        ) {
+            Text(text = "REZEPT HINZUFÜGEN")
+        }
 
     }
 }
@@ -85,7 +97,7 @@ fun MainContent(viewModel: AddEditScreenViewModel) {
                     onValueChange = { viewModel.title = it },
                     modifier = Modifier.fillMaxWidth(),
                     label = {
-                        Text(text = "title")
+                        Text(text = "Titel")
                     }
                 )
                 Spacer(modifier = Modifier.padding(10.dp))
@@ -94,7 +106,7 @@ fun MainContent(viewModel: AddEditScreenViewModel) {
                     onValueChange = { viewModel.description = it },
                     modifier = Modifier.fillMaxWidth(),
                     label = {
-                        Text(text = "description")
+                        Text(text = "Beschreibung")
                     }
                 )
                 Spacer(modifier = Modifier.padding(10.dp))
@@ -103,7 +115,7 @@ fun MainContent(viewModel: AddEditScreenViewModel) {
                     onValueChange = { viewModel.ingredients = it },
                     modifier = Modifier.fillMaxWidth(),
                     label = {
-                        Text(text = "ingredients")
+                        Text(text = "Zutaten")
                     }
                 )
                 Spacer(modifier = Modifier.padding(10.dp))
@@ -112,12 +124,10 @@ fun MainContent(viewModel: AddEditScreenViewModel) {
                     onValueChange = { viewModel.instructions = it },
                     modifier = Modifier.fillMaxWidth(),
                     label = {
-                        Text(text = "instructions")
+                        Text(text = "Anleitung")
                     }
                 )
                 Spacer(modifier = Modifier.padding(10.dp))
-
-
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -128,7 +138,7 @@ fun MainContent(viewModel: AddEditScreenViewModel) {
                             PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
                         )
                     }) {
-                        Text(text = "Pick one photo")
+                        Text(text = "Wähle ein Bild")
                     }
 
 
@@ -161,9 +171,9 @@ fun MainContent(viewModel: AddEditScreenViewModel) {
                 ) {
                     Text(
                         text = if (viewModel.recipeID == NEW_RECIPE) {
-                            "ADD RECIPE"
+                            "REZEPT HINZUFÜGEN"
                         } else {
-                            "SAVE CHANGES"
+                            "ÄNDERUNGEN SPEICHERN"
                         }
                     )
                 }

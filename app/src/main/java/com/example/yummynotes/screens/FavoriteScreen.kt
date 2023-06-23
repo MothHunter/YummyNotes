@@ -30,7 +30,7 @@ fun FavoriteScreen(navController: NavController, repository: RecipeRepository){
     val coroutineScope = rememberCoroutineScope()
 
     Column{
-        TopNavigationBar("Favorites", navController)
+        TopNavigationBar("Lieblingsrezepte", navController)
         //RecipeList(viewModel.recipes, navController)
     }
 /*

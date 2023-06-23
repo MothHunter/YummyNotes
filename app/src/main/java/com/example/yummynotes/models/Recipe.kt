@@ -57,5 +57,23 @@ fun getRecipes(): List<Recipe> {
             category = listOf(Categories.HAUPTSPEISEN, Categories.FLEISCH),
             images = listOf(R.drawable.curry)
         ),
+        Recipe(
+            title = "Curry",
+            description = "Curry mit Huhn",
+            ingredients = "Reis, Kokosmilch, Huhn, Mango, Zwiebel",
+            instructions = "Den Reis in dem Topf Kochen. In der Pfanne die restlichen Zutaten anbraten und anschließend alles vermischen",
+            isFavorite = false,
+            category = listOf(Categories.HAUPTSPEISEN, Categories.FLEISCH),
+            images = listOf(R.drawable.curry)
+        ),
+        Recipe(
+            title = "Curry",
+            description = "Curry mit Huhn",
+            ingredients = "Reis, Kokosmilch, Huhn, Mango, Zwiebel",
+            instructions = "Den Reis in dem Topf Kochen. In der Pfanne die restlichen Zutaten anbraten und anschließend alles vermischen",
+            isFavorite = false,
+            category = listOf(Categories.HAUPTSPEISEN, Categories.FLEISCH),
+            images = listOf(R.drawable.curry)
+        ),
     )
 }
