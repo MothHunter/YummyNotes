@@ -36,9 +36,10 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun RecipeScreen(navController: NavController, recipeID: Int) {
-    //val recipe = viewModel.recipeState.collectAsState()
+    /*
     val isButtonEnabledFlow = remember { MutableStateFlow(false) }
     val isButtonEnabled by isButtonEnabledFlow.collectAsState()
+    */
     val viewModel: RecipeScreenViewModel = viewModel(
         factory = Injector.provideRecipeScreenViewModelFactory(
             LocalContext.current,

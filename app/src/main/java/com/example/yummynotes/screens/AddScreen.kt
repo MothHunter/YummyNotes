@@ -4,15 +4,19 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
+import androidx.compose.material.Card
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -21,14 +25,13 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.yummynotes.models.AddEditScreenViewModel
+import com.example.yummynotes.models.Categories
 import com.example.yummynotes.models.NEW_RECIPE
 import com.example.yummynotes.ui.theme.NewPhotoPickerAndroid13Theme
 import com.example.yummynotes.utils.Injector
 import com.example.yummynotes.widgets.SimpleTopAppBar
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @Composable
 fun AddScreen(navController: NavHostController, recipeID: Int) {
@@ -105,6 +108,9 @@ fun MainContent(viewModel: AddEditScreenViewModel,
                         Text(text = "Titel")
                     }
                 )
+
+                CategoryPicker(viewModel, viewModel.categories)
+
                 Spacer(modifier = Modifier.padding(10.dp))
                 OutlinedTextField(
                     value = viewModel.description,
@@ -188,4 +194,31 @@ fun MainContent(viewModel: AddEditScreenViewModel,
     }
 }
 
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun CategoryPicker(viewModel: AddEditScreenViewModel,
+                   categoryList: List<Categories>
+) {
+    FlowRow(modifier = Modifier.padding(4.dp),
+        horizontalArrangement = Arrangement.Start
+    ) {
+        Categories.values().forEach { category ->
+
+            Card(modifier = Modifier
+                .padding(4.dp)
+                .clickable { viewModel.toggleCategory(category) },
+                elevation = 2.dp,
+                shape = RoundedCornerShape(15.dp),
+                backgroundColor = if (viewModel.categories.contains(category)) {
+                    Color.Gray
+                } else {Color.LightGray}
+            ){
+                Text(modifier = Modifier.padding(12.dp,4.dp),
+                    text= category.name)
+
+            }
+        }
+    }
+}
 
