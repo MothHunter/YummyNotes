@@ -3,11 +3,13 @@ package com.example.yummynotes.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.*
@@ -16,19 +18,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.yummynotes.models.HomeScreenViewModel
 import com.example.yummynotes.navigation.Screen
 import com.example.yummynotes.widgets.SimpleTopAppBar
 import com.example.yummynotes.R
-import com.example.yummynotes.models.AddEditScreenViewModel
-import com.example.yummynotes.models.Recipe
-import com.example.yummynotes.models.RecipeScreenViewModel
+import com.example.yummynotes.models.*
 import com.example.yummynotes.utils.Injector
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
@@ -51,10 +51,10 @@ fun RecipeScreen(navController: NavController, recipeID: Int) {
     val context = LocalContext.current
 
 
-    // this check is necessary because recipe will be a null-value after deleting
-    // this is probably not the best way to do this
+    // this check is necessary because recipe WILL be a null-value after deleting
+    // this is probably not the best way to do it
     if (recipe != null && recipe.value != null) {
-        var imageID: Int = if (recipe.value.images.isEmpty()) {
+        val imageID: Int = if (recipe.value.images.isEmpty()) {
             R.drawable.no_photos
         } else {
             recipe.value.images[0]
@@ -93,6 +93,7 @@ fun RecipeScreen(navController: NavController, recipeID: Int) {
                             .fillMaxWidth()
                             .height(210.dp)
                     )
+                    CategoriesList(categories = recipe.value.category)
                     Text(
                         text = "Beschreibung",
                         fontSize = 30.sp,
@@ -154,6 +155,26 @@ fun RecipeScreen(navController: NavController, recipeID: Int) {
 
 
                 }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun CategoriesList(categories: List<Categories>) {
+    FlowRow(modifier = Modifier.padding(4.dp),
+        horizontalArrangement = Arrangement.Start
+    ) {
+        categories.forEach { category ->
+            Card(modifier = Modifier.padding(4.dp),
+                elevation = 2.dp,
+                shape = RoundedCornerShape(15.dp),
+                backgroundColor = Color.LightGray
+            ){
+                Text(modifier = Modifier.padding(12.dp,4.dp),
+                    text= category.name)
+
             }
         }
     }

@@ -17,6 +17,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.yummynotes.models.AddEditScreenViewModel
@@ -51,7 +52,7 @@ fun AddScreen(navController: NavHostController, recipeID: Int) {
             content = { /* Custom content here */ }
         )
 
-        MainContent(viewModel)
+        MainContent(viewModel, navController)
 /*
         Button(
             enabled = isButtonEnabled,
@@ -69,7 +70,9 @@ fun AddScreen(navController: NavHostController, recipeID: Int) {
 }
 
 @Composable
-fun MainContent(viewModel: AddEditScreenViewModel) {
+fun MainContent(viewModel: AddEditScreenViewModel,
+                navController: NavController
+) {
     val recipe = viewModel.recipeState.collectAsState()
     val isButtonEnabledFlow = remember { MutableStateFlow(false) }
     val isButtonEnabled by isButtonEnabledFlow.collectAsState()
@@ -166,6 +169,7 @@ fun MainContent(viewModel: AddEditScreenViewModel) {
                         coroutineScope.launch {
                             viewModel.onAddEditButtonClick()
                         }
+                        navController.popBackStack()
                     },
                     modifier = Modifier
                         .padding(16.dp)
