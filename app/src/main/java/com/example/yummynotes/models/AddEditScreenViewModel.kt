@@ -104,7 +104,7 @@ class AddEditScreenViewModel(private val repository: RecipeRepository, val recip
             ingredients = ingredients,
             instructions = instructions,
             images = listOf<Int>(),
-            category = emptyList(),
+            category = categories,
             isFavorite = false
         )
         repository.addRecipe(newRecipe)
@@ -117,10 +117,10 @@ class AddEditScreenViewModel(private val repository: RecipeRepository, val recip
             description = description,
             ingredients = ingredients,
             instructions = instructions,
+            category = categories,
             // TODO: this needs to be included, but fields currently still missing
             /*
             images = images,
-            category = categories,
             isFavorite = isFavorite
 
              */
