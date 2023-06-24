@@ -45,108 +45,115 @@ fun RecipeScreen(navController: NavController, recipeID: Int) {
             recipeID = recipeID
         )
     )
+    val recipe = viewModel.recipeState.collectAsState()
 
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
-    var imageID: Int = if (viewModel.images.isEmpty()) {
-        R.drawable.no_photos
-    } else {
-        viewModel.images[0]
-    }
-    //val coroutineScope = rememberCoroutineScope()
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(5.dp)
-    ) {
-        SimpleTopAppBar(
-            title = viewModel.recipeState.collectAsState().value.title,
-            arrowBackClicked = { navController.popBackStack() },
-            content = {
-                EditButton() {
-                    navController.navigate(Screen.AddScreen.withId(recipeID))
+
+
+    // this check is necessary because recipe will be a null-value after deleting
+    // this is probably not the best way to do this
+    if (recipe != null && recipe.value != null) {
+        var imageID: Int = if (recipe.value.images.isEmpty()) {
+            R.drawable.no_photos
+        } else {
+            recipe.value.images[0]
+        }
+
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(5.dp)
+        ) {
+            SimpleTopAppBar(
+                title = recipe.value.title,
+                arrowBackClicked = { navController.popBackStack() },
+                content = {
+                    EditButton() {
+                        navController.navigate(Screen.AddScreen.withId(recipeID))
+                    }
                 }
-            }
-        )
-        Box {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .verticalScroll(rememberScrollState()),
-            ) {
-                Text(
-                    text = viewModel.title,
-                    fontSize = 40.sp,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Image(
-                    painter = painterResource(id = imageID),
-                    contentDescription = "Bild von ${viewModel.title}",
-                    contentScale = ContentScale.Crop,
+            )
+            Box {
+                Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(210.dp)
-                )
-                Text(
-                    text = "Beschreibung",
-                    fontSize = 30.sp,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Text(
-                    text = viewModel.description,
-                    fontSize = 20.sp,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Text(
-                    text = "Zutaten",
-                    fontSize = 30.sp,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Text(
-                    text = viewModel.ingredients.replace(", ", "\n"),
-                    fontSize = 20.sp,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Text(
-                    text = "Anleitung",
-                    fontSize = 30.sp,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Text(
-                    text = viewModel.instructions,
-                    fontSize = 20.sp,
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Spacer(modifier = Modifier.padding(10.dp))
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                        .verticalScroll(rememberScrollState()),
                 ) {
-                    Button(
-                        onClick = { viewModel.readText(context, viewModel.instructions) },
-                        modifier = Modifier.offset(20.dp,0.dp)
+                    Text(
+                        text = recipe.value.title,
+                        fontSize = 40.sp,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Image(
+                        painter = painterResource(id = imageID),
+                        contentDescription = "Bild von ${recipe.value.title}",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(210.dp)
+                    )
+                    Text(
+                        text = "Beschreibung",
+                        fontSize = 30.sp,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Text(
+                        text = recipe.value.description,
+                        fontSize = 20.sp,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Text(
+                        text = "Zutaten",
+                        fontSize = 30.sp,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Text(
+                        text = recipe.value.ingredients.replace(", ", "\n"),
+                        fontSize = 20.sp,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Text(
+                        text = "Anleitung",
+                        fontSize = 30.sp,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Text(
+                        text = recipe.value.instructions,
+                        fontSize = 20.sp,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Spacer(modifier = Modifier.padding(10.dp))
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(text = "vorlesen")
-                    }
+                        Button(
+                            onClick = { viewModel.readText(context, recipe.value.instructions) },
+                            modifier = Modifier.offset(20.dp, 0.dp)
+                        ) {
+                            Text(text = "vorlesen")
+                        }
 
-                    Button(
-                        enabled = viewModel.buttonEnabled,
-                        onClick = {
-                            coroutineScope.launch {
-                                viewModel.onDeleteButtonClick(recipeID)
+                        Button(
+                            enabled = true,
+                            onClick = {
                                 navController.popBackStack()
-                            }
-                        },
-                        modifier = Modifier.offset(150.dp,0.dp)
-                    ) {
-                        Text(text = "Rezept löschen")
+                                coroutineScope.launch {
+                                    viewModel.onDeleteButtonClick(recipeID)
+                                }
+                            },
+                            modifier = Modifier.offset(150.dp, 0.dp)
+                        ) {
+                            Text(text = "Rezept löschen")
+                        }
                     }
+
+
                 }
-
-
             }
         }
     }

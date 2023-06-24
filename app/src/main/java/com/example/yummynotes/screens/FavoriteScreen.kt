@@ -22,7 +22,7 @@ import com.example.yummynotes.utils.Injector
 import com.example.yummynotes.widgets.TopNavigationBar
 
 @Composable
-fun FavoriteScreen(navController: NavController, repository: RecipeRepository){
+fun FavoriteScreen(navController: NavController){
     val viewModel: FavoriteViewModel = viewModel(factory = Injector.provideFavoriteViewModelFactory(
         LocalContext.current))
 

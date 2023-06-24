@@ -26,13 +26,14 @@ class RecipeScreenViewModel(
     val recipeState = MutableStateFlow(Recipe())
     //delete or leave, not sure
     val images = recipeState.value.images
-    var textToSpeech: TextToSpeech? = null
+    private var textToSpeech: TextToSpeech? = null
 
 
     init {
         viewModelScope.launch {
             repository.getRecipeById(recipeID).collect {
                 recipeState.value = it
+            }
         }
     }
 
@@ -61,4 +62,4 @@ class RecipeScreenViewModel(
             }
         }
     }
-}}
+}

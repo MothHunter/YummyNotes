@@ -39,8 +39,13 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun HomeScreen(navController: NavController, viewModel: HomeScreenViewModel) {
+fun HomeScreen(navController: NavController) {
 
+    val viewModel: HomeScreenViewModel = viewModel(
+        factory = Injector.provideHomeScreenViewModelFactory(
+            LocalContext.current
+        )
+    )
     Column{
         TopNavigationBar("Meine Rezepte", navController)
         RecipeList(viewModel = viewModel, navController = navController)
@@ -58,7 +63,7 @@ viewModel: HomeScreenViewModel) {
     val coroutineScope = rememberCoroutineScope()
 
     LazyColumn(modifier = Modifier.background(color = Color.LightGray)){
-        items(items = viewModel.recipes.value) { recipeItem -> //aus der Liste recipes bekommt es der Reihe nach Elemente übergeben --> geh durch die Liste
+        items(items = recipesState) { recipeItem -> //aus der Liste recipes bekommt es der Reihe nach Elemente übergeben --> geh durch die Liste
             RecipeRow(
                 recipe = recipeItem,
                 onRecipeClick =  { recipeID: Int ->

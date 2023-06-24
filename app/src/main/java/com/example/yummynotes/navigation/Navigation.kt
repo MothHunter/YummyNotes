@@ -23,17 +23,10 @@ import com.example.yummynotes.screens.SplashScreen
 fun Navigation() {
     //holt sich die Routes aus der Sealed Class
     val navController = rememberNavController()
-    val db = RecipeDatabase.getDatabase(LocalContext.current)
-    val repository = RecipeRepository(recipeDao = db.recipeDao())
-    val homeScreenFactory = HomeScreenViewModelFactory(repository, id = 0)
-    val recipeScreenFactory = RecipeScreenViewModelFactory(repository, recipeID = 0)
-    val recipeScreenViewModel: RecipeScreenViewModel = viewModel(factory = recipeScreenFactory)
-    val homeScreenViewModel: HomeScreenViewModel = viewModel(factory = recipeScreenFactory)
-    //val addAndEditScreenViewModel = AddAndEditScreenViewModel()
 
     NavHost(navController = navController, startDestination = Screen.SplashScreen.route) {
         composable(route = Screen.MainScreen.route){
-            HomeScreen(navController = navController, viewModel = homeScreenViewModel)
+            HomeScreen(navController = navController)
 
         }
         composable(route = Screen.RecipeScreen.route,
@@ -41,7 +34,6 @@ fun Navigation() {
             {
             backStackEntry ->
                 RecipeScreen(navController = navController,
-                    viewModel = recipeScreenViewModel,
                     recipeID = backStackEntry.arguments?.getInt("recipeID") ?: 0)
         }
 
