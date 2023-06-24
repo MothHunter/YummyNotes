@@ -39,7 +39,18 @@ fun Context.resourceUri(resourceId: Int): Uri = with(resources) {
         .build()
 }
 
-
+fun Context.convertUriToResourceUri(uri: Uri): Uri {
+    return Uri.Builder()
+        .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+        .authority(uri.authority)
+        .appendPath(uri.pathSegments.first())
+        .appendPath(uri.pathSegments.last())
+        .build()
+}
+/*
+noch zu tun:
+funktion am richtigen ort aufrufen
+ */
 fun getRecipes(): List<Recipe> {
     return listOf(
         Recipe(
