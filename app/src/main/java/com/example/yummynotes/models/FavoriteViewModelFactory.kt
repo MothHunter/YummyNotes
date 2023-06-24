@@ -6,8 +6,8 @@ import com.example.yummynotes.repository.RecipeRepository
 
 class FavoriteViewModelFactory (private val recipeRepository: RecipeRepository): ViewModelProvider.Factory {
     override fun <T: ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(RecipeViewModel::class.java)) {
-            return RecipeViewModel(recipeRepository) as T
+        if (modelClass.isAssignableFrom(FavoriteViewModel::class.java)) {
+            return FavoriteViewModel(recipeRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

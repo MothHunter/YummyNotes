@@ -9,8 +9,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.yummynotes.data.RecipeDatabase
-import com.example.yummynotes.models.RecipeViewModel
-import com.example.yummynotes.models.RecipeViewModelFactory
+import com.example.yummynotes.models.HomeScreenViewModel
+import com.example.yummynotes.models.HomeScreenViewModelFactory
+import com.example.yummynotes.models.RecipeScreenViewModel
+import com.example.yummynotes.models.RecipeScreenViewModelFactory
 import com.example.yummynotes.navigation.Screen
 import com.example.yummynotes.repository.RecipeRepository
 import com.example.yummynotes.screens.AddScreen
@@ -23,20 +25,23 @@ fun Navigation() {
     val navController = rememberNavController()
     val db = RecipeDatabase.getDatabase(LocalContext.current)
     val repository = RecipeRepository(recipeDao = db.recipeDao())
-    val factory = RecipeViewModelFactory(repository)
-    val viewModel: RecipeViewModel = viewModel(factory = factory)
+    val homeScreenFactory = HomeScreenViewModelFactory(repository, id = 0)
+    val recipeScreenFactory = RecipeScreenViewModelFactory(repository, recipeID = 0)
+    val recipeScreenViewModel: RecipeScreenViewModel = viewModel(factory = recipeScreenFactory)
+    val homeScreenViewModel: HomeScreenViewModel = viewModel(factory = recipeScreenFactory)
     //val addAndEditScreenViewModel = AddAndEditScreenViewModel()
 
     NavHost(navController = navController, startDestination = Screen.SplashScreen.route) {
         composable(route = Screen.MainScreen.route){
-            HomeScreen(navController = navController, viewModel)
+            HomeScreen(navController = navController, viewModel = homeScreenViewModel)
+
         }
         composable(route = Screen.RecipeScreen.route,
             arguments = listOf(navArgument(name = "recipeID") {type = NavType.IntType}))
             {
             backStackEntry ->
                 RecipeScreen(navController = navController,
-                    viewModel = viewModel,
+                    viewModel = recipeScreenViewModel,
                     recipeID = backStackEntry.arguments?.getInt("recipeID") ?: 0)
         }
 

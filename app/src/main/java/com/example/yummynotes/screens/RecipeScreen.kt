@@ -1,6 +1,5 @@
 package com.example.yummynotes.screens
 
-import android.widget.Button
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -11,10 +10,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,37 +18,48 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.yummynotes.models.RecipeViewModel
+import com.example.yummynotes.models.HomeScreenViewModel
 import com.example.yummynotes.navigation.Screen
 import com.example.yummynotes.widgets.SimpleTopAppBar
 import com.example.yummynotes.R
-import com.example.yummynotes.widgets.TopNavigationBar
+import com.example.yummynotes.models.AddEditScreenViewModel
+import com.example.yummynotes.models.Recipe
+import com.example.yummynotes.models.RecipeScreenViewModel
+import com.example.yummynotes.utils.Injector
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 
 
 @Composable
-fun RecipeScreen(navController: NavController, viewModel: RecipeViewModel, recipeID: Int) {
+fun RecipeScreen(navController: NavController, recipeID: Int) {
+    //val recipe = viewModel.recipeState.collectAsState()
     val isButtonEnabledFlow = remember { MutableStateFlow(false) }
     val isButtonEnabled by isButtonEnabledFlow.collectAsState()
-    val recipe = viewModel.getRecipeByID(recipeID)
+    val viewModel: RecipeScreenViewModel = viewModel(
+        factory = Injector.provideRecipeScreenViewModelFactory(
+            LocalContext.current,
+            recipeID = recipeID
+        )
+    )
+
+    val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
-    var imageID: Int = if (recipe.images.isEmpty()) {
+    var imageID: Int = if (viewModel.images.isEmpty()) {
         R.drawable.no_photos
     } else {
-        recipe.images[0]
+        viewModel.images[0]
     }
-
+    //val coroutineScope = rememberCoroutineScope()
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(5.dp)
     ) {
         SimpleTopAppBar(
-            title = recipe.title,
+            title = viewModel.recipeState.collectAsState().value.title,
             arrowBackClicked = { navController.popBackStack() },
             content = {
                 EditButton() {
@@ -67,14 +74,14 @@ fun RecipeScreen(navController: NavController, viewModel: RecipeViewModel, recip
                     .verticalScroll(rememberScrollState()),
             ) {
                 Text(
-                    text = recipe.title,
+                    text = viewModel.title,
                     fontSize = 40.sp,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
                 )
                 Image(
                     painter = painterResource(id = imageID),
-                    contentDescription = "Bild von ${recipe.title}",
+                    contentDescription = "Bild von ${viewModel.title}",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -87,7 +94,7 @@ fun RecipeScreen(navController: NavController, viewModel: RecipeViewModel, recip
                     modifier = Modifier.fillMaxWidth()
                 )
                 Text(
-                    text = recipe.description,
+                    text = viewModel.description,
                     fontSize = 20.sp,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -98,7 +105,7 @@ fun RecipeScreen(navController: NavController, viewModel: RecipeViewModel, recip
                     modifier = Modifier.fillMaxWidth()
                 )
                 Text(
-                    text = recipe.ingredients.replace(", ", "\n"),
+                    text = viewModel.ingredients.replace(", ", "\n"),
                     fontSize = 20.sp,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -109,7 +116,7 @@ fun RecipeScreen(navController: NavController, viewModel: RecipeViewModel, recip
                     modifier = Modifier.fillMaxWidth()
                 )
                 Text(
-                    text = recipe.instructions,
+                    text = viewModel.instructions,
                     fontSize = 20.sp,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -119,13 +126,20 @@ fun RecipeScreen(navController: NavController, viewModel: RecipeViewModel, recip
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Button(
-                        onClick = { viewModel.readText(context, recipe.instructions) },
+                        onClick = { viewModel.readText(context, viewModel.instructions) },
                         modifier = Modifier.offset(20.dp,0.dp)
                     ) {
                         Text(text = "vorlesen")
                     }
+
                     Button(
-                        onClick = { /* TODO: Implement delete recipe logic */ },
+                        enabled = viewModel.buttonEnabled,
+                        onClick = {
+                            coroutineScope.launch {
+                                viewModel.onDeleteButtonClick(recipeID)
+                                navController.popBackStack()
+                            }
+                        },
                         modifier = Modifier.offset(150.dp,0.dp)
                     ) {
                         Text(text = "Rezept löschen")

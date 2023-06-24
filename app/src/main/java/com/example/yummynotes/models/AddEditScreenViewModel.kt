@@ -50,7 +50,6 @@ class AddEditScreenViewModel(private val repository: RecipeRepository, val recip
 
     suspend fun onAddEditButtonClick() {
 
-
         if (recipeID == NEW_RECIPE) {
             addRecipe()
         } else {

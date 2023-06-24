@@ -1,6 +1,5 @@
 package com.example.yummynotes
 
-import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -13,7 +12,6 @@ import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -28,23 +26,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.yummynotes.data.RecipeDao
 import com.example.yummynotes.models.Recipe
-import com.example.yummynotes.models.RecipeViewModel
-import com.example.yummynotes.models.getRecipes
+import com.example.yummynotes.models.HomeScreenViewModel
 import com.example.yummynotes.models.resourceUri
 
 import com.example.yummynotes.widgets.TopNavigationBar
 
 
 import com.example.yummynotes.navigation.Screen
-import com.example.yummynotes.repository.RecipeRepository
 import com.example.yummynotes.utils.Injector
 import kotlinx.coroutines.launch
 
 
 @Composable
-fun HomeScreen(navController: NavController, viewModel: RecipeViewModel) {
+fun HomeScreen(navController: NavController, viewModel: HomeScreenViewModel) {
 
     Column{
         TopNavigationBar("Meine Rezepte", navController)
@@ -56,8 +51,8 @@ fun HomeScreen(navController: NavController, viewModel: RecipeViewModel) {
 @Composable
 fun RecipeList(
 navController: NavController,
-viewModel: RecipeViewModel) {
-    val viewModel: RecipeViewModel = viewModel(factory = Injector.provideRecipeViewModelFactory(
+viewModel: HomeScreenViewModel) {
+    val viewModel: HomeScreenViewModel = viewModel(factory = Injector.provideHomeScreenViewModelFactory(
         LocalContext.current))
     val recipesState by viewModel.recipes.collectAsState()
     val coroutineScope = rememberCoroutineScope()

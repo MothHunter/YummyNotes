@@ -2,10 +2,15 @@ package com.example.yummynotes.models
 
 import android.content.ContentResolver
 import android.content.Context
+import android.graphics.Bitmap
 import android.net.Uri
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.yummynotes.R
+import com.example.yummynotes.models.Categories
+
+
+
 
 const val NEW_RECIPE = -1
 @Entity

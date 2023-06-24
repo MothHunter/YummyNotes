@@ -1,9 +1,7 @@
 package com.example.yummynotes.screens
 
 import android.net.Uri
-import android.os.Bundle
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.compose.setContent
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
@@ -19,13 +17,13 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.yummynotes.models.Recipe
-import com.example.yummynotes.models.RecipeViewModel
+import com.example.yummynotes.models.HomeScreenViewModel
 import com.example.yummynotes.ui.theme.NewPhotoPickerAndroid13Theme
 import com.example.yummynotes.widgets.TopNavigationBar
 import kotlinx.coroutines.flow.MutableStateFlow
-
+/*
 @Composable
-fun EditAndAddScreen(viewModel: RecipeViewModel, navController: NavHostController, recipeID: Int) {
+fun EditAndAddScreen(viewModel: HomeScreenViewModel, navController: NavHostController, recipeID: Int) {
     val recipe : Recipe = viewModel.getRecipeByID(recipeID)
     /* val coroutineScope = remember {
          CoroutineScope(Dispatchers.Main)
