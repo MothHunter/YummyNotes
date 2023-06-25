@@ -33,16 +33,13 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun FavoriteScreen(navController: NavController) {
-    val db = RecipeDatabase.getDatabase(LocalContext.current)
-    val repository = RecipeRepository(recipeDao = db.recipeDao())
-    val factory = FavoriteViewModelFactory(repository)
-    val viewModel: FavoriteViewModel = viewModel(factory = factory)
+    val viewModel: FavoriteViewModel = viewModel(factory = Injector.provideFavoriteViewModelFactory(
+        LocalContext.current))
     val recipeList by viewModel.recipes.collectAsState()
-    val recipeState = viewModel.recipes
     val coroutineScope = rememberCoroutineScope()
 
     Scaffold(topBar = {
-        SimpleTopAppBar(arrowBackClicked = { navController.popBackStack() })
+        SimpleTopAppBar(title = "Lieblingsrezepte", arrowBackClicked = { navController.popBackStack() })
         {
             Text(text = "Meine Lieblingsrezepte")
 
@@ -51,7 +48,7 @@ fun FavoriteScreen(navController: NavController) {
             padding ->
         Column(modifier = Modifier.padding(padding)) {
             LazyColumn {
-                items(items = recipeState) { recipeItem ->
+                items(items = recipeList) { recipeItem ->
                     RecipeRow(
                         recipe = recipeItem,
                         onRecipeClick = { recipeID: Int ->
@@ -59,7 +56,7 @@ fun FavoriteScreen(navController: NavController) {
                         },
                         onFavIconClick = { recipe ->
                             coroutineScope.launch {
-                                viewModel.toggleFavorite(recipe)
+                                viewModel.updateFavorites(recipe)
                             }
                         }
 
