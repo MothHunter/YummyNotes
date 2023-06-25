@@ -12,7 +12,7 @@ sealed class Screen(val route: String) {
             return this.route.replace(oldValue = "{recipeID}", newValue = recipeID.toString())
         }
     }
-
+    object FavoritesScreen: Screen("favorites")
     object AddScreen : Screen("add/{recipeID}") {
         fun withId(recipeID: Int): String {
             return this.route.replace(oldValue = "{recipeID}", newValue = recipeID.toString())

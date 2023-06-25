@@ -17,6 +17,7 @@ import com.example.yummynotes.navigation.Screen
 import com.example.yummynotes.repository.RecipeRepository
 import com.example.yummynotes.screens.AddScreen
 import com.example.yummynotes.screens.CategoriesScreen
+import com.example.yummynotes.screens.FavoriteScreen
 import com.example.yummynotes.screens.RecipeScreen
 import com.example.yummynotes.screens.SplashScreen
 
@@ -37,7 +38,9 @@ fun Navigation() {
                 RecipeScreen(navController = navController,
                     recipeID = backStackEntry.arguments?.getInt("recipeID") ?: 0)
         }
-
+        composable(route = Screen.FavoritesScreen.route){
+           FavoriteScreen(navController = navController)
+            }
         composable(route = Screen.AddScreen.route,
             arguments = listOf(navArgument(name = "recipeID") {type = NavType.IntType}))
         {

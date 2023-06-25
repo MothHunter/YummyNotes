@@ -19,7 +19,6 @@ class RecipeRepository(private val recipeDao: RecipeDao) {
     fun getAllFavorites(): Flow<List<Recipe>> {
         return recipeDao.getAllFavorites()
 
-        //hab ich das richtige flow importiert @Florian?
     }
 
 

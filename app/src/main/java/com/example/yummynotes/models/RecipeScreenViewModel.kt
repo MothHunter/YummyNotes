@@ -51,6 +51,7 @@ class RecipeScreenViewModel(
         }
     }
 
+
     fun readText(context: Context, text: String) {
         textToSpeech = TextToSpeech(context) { result ->
             Log.d("TTS", result.toString())
