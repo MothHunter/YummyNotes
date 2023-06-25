@@ -22,9 +22,10 @@ interface RecipeDao {
     fun getAllRecipes(): Flow<List<Recipe>>
 
     @Query("SELECT * FROM recipe WHERE isFavorite = 1")
-
     //@Florian: wie kann man das 1 durch true ersetzen?
     fun getAllFavorites(): Flow<List<Recipe>>
+
     @Query("SELECT * FROM recipe WHERE id =:recipeId")
     fun getRecipeByID(recipeId: Int) : Flow<Recipe>
+
 }

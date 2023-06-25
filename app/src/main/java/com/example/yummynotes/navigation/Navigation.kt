@@ -16,6 +16,7 @@ import com.example.yummynotes.models.RecipeScreenViewModelFactory
 import com.example.yummynotes.navigation.Screen
 import com.example.yummynotes.repository.RecipeRepository
 import com.example.yummynotes.screens.AddScreen
+import com.example.yummynotes.screens.CategoriesScreen
 import com.example.yummynotes.screens.RecipeScreen
 import com.example.yummynotes.screens.SplashScreen
 
@@ -46,6 +47,11 @@ fun Navigation() {
         }
         composable(route = Screen.SplashScreen.route){
             SplashScreen(navController = navController)
+        }
+
+        composable(route = Screen.CategoriesScreen.route)
+        {
+            CategoriesScreen(navController = navController)
         }
     }
 }

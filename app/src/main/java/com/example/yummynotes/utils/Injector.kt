@@ -3,10 +3,7 @@ package com.example.yummynotes.utils
 //import RecipeScreenViewModelFactory
 import android.content.Context
 import com.example.yummynotes.data.RecipeDatabase
-import com.example.yummynotes.models.AddEditScreenViewModelFactory
-import com.example.yummynotes.models.FavoriteViewModelFactory
-import com.example.yummynotes.models.HomeScreenViewModelFactory
-import com.example.yummynotes.models.RecipeScreenViewModelFactory
+import com.example.yummynotes.models.*
 
 import com.example.yummynotes.repository.RecipeRepository
 
@@ -34,6 +31,10 @@ object Injector {
     fun provideRecipeScreenViewModelFactory(context: Context, recipeID: Int): RecipeScreenViewModelFactory {
         val repository = getRecipeRepository(context)
         return RecipeScreenViewModelFactory(repository, recipeID = recipeID)
+    }
+    fun provideCategoriesScreenViewModelFactory(context: Context): CategoriesScreenViewModelFactory {
+        val repository = getRecipeRepository(context)
+        return CategoriesScreenViewModelFactory(repository)
     }
     //same for others
 }

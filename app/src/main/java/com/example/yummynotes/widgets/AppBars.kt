@@ -21,8 +21,8 @@ import androidx.compose.ui.unit.dp
 
 val NavItems = listOf(
     NavItem(
-        name = "Search",
-        route = "search",
+        name = "Categories",
+        route = "categories",
         icon = Icons.Rounded.Search,
     ),
     NavItem(
