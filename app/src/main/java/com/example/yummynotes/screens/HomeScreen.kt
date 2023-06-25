@@ -130,19 +130,21 @@ fun RecipeRow(recipe: Recipe,
                 .fillMaxWidth()
                 .padding(10.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
-            ){
-            Text("${recipe.title}\n${recipe.description}",
-                modifier = Modifier
-                    .height(80.dp)
-                    .padding(10.dp))
-                Spacer(modifier= Modifier.width(5.dp))
+            ) {
+                Text(
+                    "${recipe.title}\n${recipe.description}",
+                    modifier = Modifier
+                        .height(80.dp)
+                        .padding(10.dp)
+                )
+                Spacer(modifier = Modifier.width(5.dp))
 
                 Icon(imageVector = Icons.Default.FavoriteBorder,
                     contentDescription = "Lieblingsrezepte",
-                    modifier = Modifier.clickable {  }
+                    modifier = Modifier.clickable { }
                 )
 
-
+            }
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -172,7 +174,7 @@ fun RecipeRow(recipe: Recipe,
 
 
         }
-    }}}
+    }}
 
 
 

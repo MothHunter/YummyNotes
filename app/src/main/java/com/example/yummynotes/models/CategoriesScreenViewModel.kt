@@ -13,22 +13,28 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 
-class CategoriesScreenViewModel (private val repository: RecipeRepository): ViewModel(){
+class CategoriesScreenViewModel(private val repository: RecipeRepository) : ViewModel() {
     private val _recipes = MutableStateFlow(listOf<Recipe>())
     val recipes: StateFlow<List<Recipe>> = _recipes.asStateFlow()
     var categories by mutableStateOf(listOf<Categories>())
-    var filteredRecipes = MutableStateFlow(listOf<Recipe>())
+    var filteredRecipes = _recipes.asStateFlow().value.filter {
+        if (categories.isEmpty()) {
+            it.title.length >= 0//this is only a dumb way to say "give me everything"
+        } else {
+            it.category.containsAll(categories)
+        }
+    }
 
 
-
-    init{
+    init {
         viewModelScope.launch {
-            repository.getAllFavorites().collect{
-                    listOfRecipes -> if(listOfRecipes.isNullOrEmpty()){
-                Log.d("CategoryScreenViewModel", "No Recipes")
-            } else {
-                _recipes.value = listOfRecipes
-            }
+            repository.getAllRecipes().collect { listOfRecipes ->
+                if (listOfRecipes.isNullOrEmpty()) {
+                    Log.d("CategoryScreenViewModel", "No Recipes")
+                } else {
+                    _recipes.value = listOfRecipes
+                    filteredRecipes = _recipes.asStateFlow().value
+                }
             }
         }
     }
@@ -41,13 +47,20 @@ class CategoriesScreenViewModel (private val repository: RecipeRepository): View
             list.add(category)
         }
         categories = list
+        filterRecipesByCategory()
     }
 
-    fun getRecipeByCategory(categories: List<Categories>) {
-         filteredRecipes = _recipes.asStateFlow() { recipe ->
-            recipe.category.any { it in categories }
+    fun filterRecipesByCategory() {
+        filteredRecipes = _recipes.asStateFlow().value.filter {
+            if (categories.isEmpty()) {
+                it.title.length >= 0//this is only a dumb way to say "give me everything"
+            } else {
+                it.category.containsAll(categories)
+            }
         }
     }
+
+
 
     suspend fun toggleFavorite(recipe: Recipe) {
         recipe.isFavorite = !recipe.isFavorite

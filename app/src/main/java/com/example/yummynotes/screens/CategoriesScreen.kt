@@ -22,6 +22,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.yummynotes.RecipeList
+import com.example.yummynotes.RecipeRow
 import com.example.yummynotes.models.*
 import com.example.yummynotes.navigation.Screen
 import com.example.yummynotes.utils.Injector
@@ -58,7 +59,7 @@ fun MainContent(viewModel: CategoriesScreenViewModel, navController: NavControll
 
     Column(
         modifier = Modifier
-            .verticalScroll(rememberScrollState())
+            //.verticalScroll(rememberScrollState())
             .fillMaxWidth()
             .padding(bottom = 16.dp) // Abstand zum Bildschirmende
     ) {
@@ -70,6 +71,11 @@ fun MainContent(viewModel: CategoriesScreenViewModel, navController: NavControll
         ) {
             CategoryPicker(viewModel, viewModel.categories)
         }
+
+
+        FilteredList(navController = navController, viewModel = viewModel)
+
+
         Spacer(modifier = Modifier.height(130.dp))
         Column(modifier = Modifier.fillMaxWidth()) {
             Button(
@@ -148,12 +154,14 @@ fun FilteredList(
     viewModel: CategoriesScreenViewModel) {
     val viewModel: CategoriesScreenViewModel = viewModel(factory = Injector.provideCategoriesScreenViewModelFactory(
         LocalContext.current))
-    val recipes by viewModel.recipes.collectAsState()
+    //val recipes by viewModel.recipes.collectAsState()
+    val recipes = viewModel.filteredRecipes
     val coroutineScope = rememberCoroutineScope()
 
     LazyColumn(modifier = Modifier.background(color = Color.LightGray)){
         items(items = recipes) { recipeItem -> //aus der Liste recipes bekommt es der Reihe nach Elemente übergeben --> geh durch die Liste
-            FilteredRow(
+
+            RecipeRow(
                 recipe = recipeItem,
                 onRecipeClick =  { recipeID: Int ->
                     navController.navigate(Screen.RecipeScreen.withId(recipeID)) },
