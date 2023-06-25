@@ -15,10 +15,13 @@ import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -59,13 +62,15 @@ fun HomeScreen(navController: NavController) {
     )
     Column{
         TopNavigationBar("Meine Rezepte", navController)
-        RecipeList(viewModel = viewModel, navController = navController)
+        RecipeList(viewModel = viewModel, navController = navController, modifier = Modifier)
+        //modifier hab ich hinzugefügt
     }
 }
 
 
 @Composable
 fun RecipeList(
+    modifier: Modifier, //evt nocch löschen
 navController: NavController,
 viewModel: HomeScreenViewModel) {
     val viewModel: HomeScreenViewModel = viewModel(factory = Injector.provideHomeScreenViewModelFactory(
@@ -95,6 +100,8 @@ viewModel: HomeScreenViewModel) {
 fun RecipeRow(recipe: Recipe,
               onRecipeClick: (Int) -> Unit,
               onFavIconClick: (Recipe) -> Unit = {}
+
+
 ) { //später werden mehrere Parameter eingefügt
     var imageID: String = if (recipe.images.isEmpty()) {
         "android.resource://com.example.yummynotes/drawable/no_photos"
@@ -135,10 +142,7 @@ fun RecipeRow(recipe: Recipe,
                     modifier = Modifier.clickable {  }
                 )
 
-               // Text("Favorites")
 
-        }
-            //later add the row and box etc when needed
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -156,14 +160,7 @@ fun RecipeRow(recipe: Recipe,
                        .height(200.dp)
                        .width(200.dp))
 
-                /*Image(painter = painterResource(id = imageID),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp)
-                        .width(200.dp)
-                )*/
+
                 Box(
                     modifier = Modifier
                         .align(Alignment.TopEnd)
@@ -175,8 +172,7 @@ fun RecipeRow(recipe: Recipe,
 
 
         }
-    }}
-//hier können UI Elemente verschachtelt werden
+    }}}
 
 
 
