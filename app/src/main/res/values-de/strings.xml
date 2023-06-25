@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">YummyNotes</string>
+    <string name="my_recipes">Meine Rezepte</string>
+    <string name="description">Beschreibung</string>
+    <string name="ingredients">Zutaten</string>
+    <string name="instructions">Anleitung</string>
+    <string name="read">vorlesen</string>
+    <string name="delete_recipe">Rezept löschen</string>
+    <string name="find_recipes">Rezepte Finden</string>
+    <string name="add_Recipe">Rezept hinzufügen</string>
+    <string name="pick_image">Bild auswählen</string>
+    <string name="edit_recipe">Rezept bearbeiten</string>
+</resources>

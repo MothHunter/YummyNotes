@@ -5,6 +5,8 @@ plugins {
     //Jetpack Room
     id 'com.google.devtools.ksp' version "1.8.0-1.0.9"
 
+    id 'org.jetbrains.kotlin.plugin.serialization' version "1.8.22"
+
 }
 
 configurations.implementation {
@@ -88,7 +90,11 @@ dependencies {
 
     // Worker
     implementation 'androidx.work:work-runtime-ktx:2.8.1'
- //Photopicker
+
+    // Photopicker
     implementation "io.coil-kt:coil-compose:2.2.2"
+
+    // Serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
 
 }

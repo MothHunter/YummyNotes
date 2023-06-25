@@ -9,11 +9,15 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.yummynotes.R
 import com.example.yummynotes.models.Categories
-
-
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 
 const val NEW_RECIPE = -1
+
+@Serializable
 @Entity
 data class Recipe(
     @PrimaryKey (autoGenerate = true)
@@ -32,6 +36,15 @@ data class Recipe(
     override fun equals(other: Any?): Boolean {
         return super.equals(other)
     }
+}
+
+fun recipeToJson (recipe: Recipe) : String {
+    return Json.encodeToString(recipe.copy(images = emptyList()))
+}
+
+fun jsonToRecipe (jsonString: String) : Recipe {
+    return Json.decodeFromString<Recipe>(jsonString)
+
 }
 
 // Usage in Composable:

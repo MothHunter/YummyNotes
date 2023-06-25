@@ -1,5 +1,6 @@
 package com.example.yummynotes.models
 
+import android.os.Environment
 import android.speech.tts.TextToSpeech
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -34,6 +35,10 @@ class HomeScreenViewModel(private val repository: RecipeRepository) : ViewModel(
     suspend fun toggleFavorite(recipe: Recipe) {
         recipe.isFavorite = !recipe.isFavorite
         repository.updateRecipe(recipe)
+    }
+
+    suspend fun exportRecipe (recipe: Recipe) {
+        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
     }
 
 }
