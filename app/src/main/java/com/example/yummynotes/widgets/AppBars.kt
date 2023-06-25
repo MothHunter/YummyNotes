@@ -6,24 +6,26 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.yummynotes.R
 
 
-
-
+// these can not be localized like the other strings because they are not in an composable
+// fix??
 val NavItems = listOf(
     NavItem(
         name = "Categories",
@@ -34,6 +36,11 @@ val NavItems = listOf(
         name = "Create",
         route = "add/-1",
         icon = Icons.Rounded.Add,
+    ),
+    NavItem(
+        name = "Favorites",
+        route = "favorites",
+        icon = Icons.Filled.Favorite,
     )
 
 )
@@ -60,7 +67,7 @@ fun CategoriesScreenBar(
         navigationIcon = {
             Icon(
                 imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Arrow back",
+                contentDescription = stringResource(id = R.string.back),
                 tint = Color.White,
                 modifier = Modifier.padding(5.dp).clickable {
                     arrowBackClicked()
@@ -69,7 +76,7 @@ fun CategoriesScreenBar(
         },
         actions = {
             androidx.compose.material.IconButton(onClick = { showMenu = !showMenu }) {
-                Icon(imageVector = Icons.Filled.MoreVert, contentDescription = "recommend recipe", tint = Color.White)
+                Icon(imageVector = Icons.Filled.MoreVert, contentDescription = stringResource(id = R.string.recommended_recipes), tint = Color.White)
             }
             DropdownMenu(
                 expanded = showMenu,
@@ -106,7 +113,7 @@ fun SimpleAppBar(
         navigationIcon = {
             Icon(
                 imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Arrow back",
+                contentDescription = stringResource(id = R.string.back),
                 tint = Color.White,
                 modifier = Modifier.padding(5.dp).clickable {
                     arrowBackClicked()

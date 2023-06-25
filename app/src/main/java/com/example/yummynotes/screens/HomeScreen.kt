@@ -1,14 +1,15 @@
 package com.example.yummynotes
 
+//import com.example.yummynotes.models.resourceUri
+
+
 import android.app.Activity
 import android.util.Log
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -20,30 +21,22 @@ import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.example.yummynotes.models.Recipe
 import com.example.yummynotes.models.HomeScreenViewModel
-//import com.example.yummynotes.models.resourceUri
-
-import com.example.yummynotes.widgets.TopNavigationBar
-
-
+import com.example.yummynotes.models.Recipe
 import com.example.yummynotes.navigation.Screen
 import com.example.yummynotes.utils.Injector
+import com.example.yummynotes.widgets.TopNavigationBar
 import kotlinx.coroutines.launch
 
 
@@ -92,6 +85,7 @@ viewModel: HomeScreenViewModel) {
                 }
 
             )
+            Log.d("CheckFavStatus", "${recipeItem.title}: ${recipeItem.isFavorite}")
         }
 
     }
@@ -127,10 +121,10 @@ fun RecipeRow(recipe: Recipe,
             verticalArrangement = Arrangement.Top,
             //horizontalAlignment = Alignment.End
         ) {
-            Row(modifier = Modifier
+            Box(modifier = Modifier
                 .fillMaxWidth()
                 .padding(10.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    //horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
                     "${recipe.title}\n${recipe.description}",
@@ -138,11 +132,15 @@ fun RecipeRow(recipe: Recipe,
                         .height(80.dp)
                         .padding(10.dp)
                 )
-                Spacer(modifier = Modifier.width(5.dp))
 
-                Icon(imageVector = Icons.Default.FavoriteBorder,
-                    contentDescription = "Lieblingsrezepte",
-                    modifier = Modifier.clickable { }
+                Icon(imageVector = if(recipe.isFavorite) Icons.Filled.Favorite else Icons.Default.FavoriteBorder ,
+                    contentDescription = stringResource(id = R.string.favorite_recipes)
+                    ,
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .clickable {
+                        onFavIconClick(recipe)
+                    }
                 )
 
             }

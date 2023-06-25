@@ -9,14 +9,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -27,7 +26,6 @@ import com.example.yummynotes.models.*
 import com.example.yummynotes.navigation.Screen
 import com.example.yummynotes.utils.Injector
 import com.example.yummynotes.widgets.CategoriesScreenBar
-import com.example.yummynotes.widgets.SimpleAppBar
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
@@ -40,7 +38,7 @@ fun CategoriesScreen(navController: NavController){
     )
     Column {
         CategoriesScreenBar(
-            title = "Finde Rezepte",
+            title = stringResource(id = R.string.find_recipes),
             arrowBackClicked = { navController.popBackStack() },
             content = {
                 DropdownMenuItem(onClick = {
@@ -54,11 +52,11 @@ fun CategoriesScreen(navController: NavController){
                     Row {
                         Icon(
                              imageVector = Icons.Filled.Star,
-                            contentDescription = "Rezept vorschlagen",
+                            contentDescription = stringResource(id = R.string.suggest_recipe),
                             modifier = Modifier.padding(4.dp)
                         )
                         Text(
-                            text = "Rezept vorschlagen", modifier = Modifier
+                            text = stringResource(id = R.string.suggest_recipe), modifier = Modifier
                                 .width(100.dp)
                                 .padding(4.dp).fillMaxWidth()
                         )
@@ -159,7 +157,7 @@ fun CategoryPicker(viewModel: CategoriesScreenViewModel,
                             }
                     ){
                         Text(modifier = Modifier.padding(12.dp,4.dp),
-                            text= category.name)
+                            text= getLocalizedCategory(category, LocalContext.current))
 
                     }
                 }

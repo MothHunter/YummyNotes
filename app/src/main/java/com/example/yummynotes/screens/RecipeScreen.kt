@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -23,10 +24,11 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.example.yummynotes.navigation.Screen
-import com.example.yummynotes.widgets.SimpleAppBar
+import com.example.yummynotes.R
 import com.example.yummynotes.models.*
+import com.example.yummynotes.navigation.Screen
 import com.example.yummynotes.utils.Injector
+import com.example.yummynotes.widgets.SimpleAppBar
 import kotlinx.coroutines.launch
 
 
@@ -105,7 +107,7 @@ fun RecipeScreen(navController: NavController, recipeID: Int) {
                     )
                     AsyncImage(
                         model = imageID,
-                        contentDescription = "Bild von ${recipe.value.title}",
+                        contentDescription = "${stringResource(id = R.string.picture_of)} ${recipe.value.title}",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -113,7 +115,7 @@ fun RecipeScreen(navController: NavController, recipeID: Int) {
                     )
                     CategoriesList(categories = recipe.value.category)
                     Text(
-                        text = "Beschreibung",
+                        text = stringResource(id = R.string.description),
                         fontSize = 30.sp,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth()
@@ -124,7 +126,7 @@ fun RecipeScreen(navController: NavController, recipeID: Int) {
                         modifier = Modifier.fillMaxWidth()
                     )
                     Text(
-                        text = "Zutaten",
+                        text = stringResource(id = R.string.ingredients),
                         fontSize = 30.sp,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth()
@@ -135,7 +137,7 @@ fun RecipeScreen(navController: NavController, recipeID: Int) {
                         modifier = Modifier.fillMaxWidth()
                     )
                     Text(
-                        text = "Anleitung",
+                        text = stringResource(id = R.string.instructions),
                         fontSize = 30.sp,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth()
@@ -154,7 +156,7 @@ fun RecipeScreen(navController: NavController, recipeID: Int) {
                             onClick = { viewModel.readText(context, recipe.value.instructions) },
                             modifier = Modifier.offset(20.dp, 0.dp)
                         ) {
-                            Text(text = "vorlesen")
+                            Text(text = stringResource(id = R.string.read))
                         }
 
                         Button(
@@ -167,7 +169,7 @@ fun RecipeScreen(navController: NavController, recipeID: Int) {
                             },
                             modifier = Modifier.offset(150.dp, 0.dp)
                         ) {
-                            Text(text = "Rezept löschen")
+                            Text(text = stringResource(id = R.string.delete_recipe))
                         }
                     }
 
@@ -192,7 +194,7 @@ fun CategoriesList(categories: List<Categories>) {
                 backgroundColor = Color.LightGray
             ){
                 Text(modifier = Modifier.padding(12.dp,4.dp),
-                    text= category.name)
+                    text= getLocalizedCategory(category, LocalContext.current))
 
             }
         }
@@ -205,7 +207,7 @@ fun EditButton(
 ) {
     Icon(
         imageVector = Icons.Default.Edit,
-        contentDescription = "Rezept bearbeiten",
+        contentDescription = stringResource(id = R.string.edit_recipe),
         tint = Color.White,
         modifier = Modifier.clickable {
             onClick()

@@ -30,7 +30,7 @@ class FavoriteViewModel(private val repository: RecipeRepository): ViewModel(){
     }
 
     suspend fun updateFavorites(recipe: Recipe){
-        recipe.isFavorite = recipe.isFavorite
+        recipe.isFavorite = !recipe.isFavorite
         repository.updateRecipe(recipe)
     }
 

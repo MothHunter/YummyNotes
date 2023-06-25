@@ -18,14 +18,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import com.example.yummynotes.R
 import com.example.yummynotes.models.AddEditScreenViewModel
 import com.example.yummynotes.models.Categories
 import com.example.yummynotes.models.NEW_RECIPE
+import com.example.yummynotes.models.getLocalizedCategory
 import com.example.yummynotes.ui.theme.NewPhotoPickerAndroid13Theme
 import com.example.yummynotes.utils.Injector
 import com.example.yummynotes.widgets.SimpleAppBar
@@ -46,9 +49,9 @@ fun AddScreen(navController: NavHostController, recipeID: Int) {
     Column {
         SimpleAppBar(
             title = if (recipeID == NEW_RECIPE) {
-                "Rezept hinzufügen"
+                stringResource(id = R.string.add_Recipe)
             } else {
-                "Rezept bearbeiten"
+                stringResource(id = R.string.edit_recipe)
             },
             arrowBackClicked = { navController.popBackStack() },
             content = { /* Custom content here */ }
@@ -109,7 +112,7 @@ fun MainContent(viewModel: AddEditScreenViewModel,
                     onValueChange = { viewModel.title = it },
                     modifier = Modifier.fillMaxWidth(),
                     label = {
-                        Text(text = "Titel")
+                        Text(text = stringResource(id = R.string.recipe_name))
                     }
                 )
 
@@ -121,7 +124,7 @@ fun MainContent(viewModel: AddEditScreenViewModel,
                     onValueChange = { viewModel.description = it },
                     modifier = Modifier.fillMaxWidth(),
                     label = {
-                        Text(text = "Beschreibung")
+                        Text(text = stringResource(id = R.string.description))
                     }
                 )
                 Spacer(modifier = Modifier.padding(10.dp))
@@ -130,7 +133,7 @@ fun MainContent(viewModel: AddEditScreenViewModel,
                     onValueChange = { viewModel.ingredients = it },
                     modifier = Modifier.fillMaxWidth(),
                     label = {
-                        Text(text = "Zutaten")
+                        Text(text = stringResource(id = R.string.ingredients))
                     }
                 )
                 Spacer(modifier = Modifier.padding(10.dp))
@@ -139,7 +142,7 @@ fun MainContent(viewModel: AddEditScreenViewModel,
                     onValueChange = { viewModel.instructions = it },
                     modifier = Modifier.fillMaxWidth(),
                     label = {
-                        Text(text = "Anleitung")
+                        Text(text = stringResource(id = R.string.instructions))
                     }
                 )
                 Spacer(modifier = Modifier.padding(10.dp))
@@ -153,7 +156,7 @@ fun MainContent(viewModel: AddEditScreenViewModel,
                             PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
                         )
                     }) {
-                        Text(text = "Wähle ein Bild")
+                        Text(text = stringResource(id = R.string.pick_image))
                     }
 
 
@@ -189,9 +192,9 @@ fun MainContent(viewModel: AddEditScreenViewModel,
                 ) {
                     Text(
                         text = if (viewModel.recipeID == NEW_RECIPE) {
-                            "REZEPT HINZUFÜGEN"
+                            stringResource(id = R.string.add_Recipe)
                         } else {
-                            "ÄNDERUNGEN SPEICHERN"
+                            stringResource(id = R.string.edit_recipe)
                         }
                     )
                 }
@@ -221,7 +224,7 @@ fun CategoryPicker(viewModel: AddEditScreenViewModel,
                 } else {Color.LightGray}
             ){
                 Text(modifier = Modifier.padding(12.dp,4.dp),
-                    text= category.name)
+                    text= getLocalizedCategory(category, LocalContext.current))
 
             }
         }

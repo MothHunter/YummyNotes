@@ -11,4 +11,27 @@
     <string name="add_Recipe">Rezept hinzufügen</string>
     <string name="pick_image">Bild auswählen</string>
     <string name="edit_recipe">Rezept bearbeiten</string>
+    <string name="favorite_recipes">Lieblingsrezepte</string>
+    <string name="recipe_name">Rezeptname</string>
+    <string name="suggest_recipe">Rezept vorschlagen</string>
+    <string name="picture_of">Bild von</string>
+    <string name="recommended_recipes">Vorgeschlagene Rezepte</string>
+    <string name="back">zurück</string>
+    <string name="categories">Kategorien</string>
+    <string name="create">erstellen</string>
+    <string name="VORSPEISE">Vorspeise</string>
+    <string name="NACHSPEISEN">Nachspeise</string>
+    <string name="HAUPTSPEISEN">Hauptspeise</string>
+    <string name="SNACKS">Snack</string>
+    <string name="SALATE">Salat</string>
+    <string name="SUPPEN">Suppe</string>
+    <string name="VEGETARISCH">Vegetarisch</string>
+    <string name="VEGAN">Vegan</string>
+    <string name="SANDWICHES">Sandwich</string>
+    <string name="SMOOTHIES">Smoothies</string>
+    <string name="BACKWAREN">Backwaren</string>
+    <string name="TORTEN">Torten</string>
+    <string name="FLEISCH">Fleisch</string>
+    <string name="MEDITERRAN">Mediterran</string>
+    <string name="FASTFOOD">Fastfood</string>
 </resources>
