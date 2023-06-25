@@ -31,7 +31,6 @@ class HomeScreenViewModel(private val repository: RecipeRepository) : ViewModel(
     }
 
 
-
     suspend fun toggleFavorite(recipe: Recipe) {
         recipe.isFavorite = !recipe.isFavorite
         repository.updateRecipe(recipe)

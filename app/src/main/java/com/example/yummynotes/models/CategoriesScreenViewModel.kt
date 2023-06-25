@@ -1,5 +1,6 @@
 package com.example.yummynotes.models
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -9,20 +10,25 @@ import com.example.yummynotes.repository.RecipeRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 
 class CategoriesScreenViewModel (private val repository: RecipeRepository): ViewModel(){
     private val _recipes = MutableStateFlow(listOf<Recipe>())
     val recipes: StateFlow<List<Recipe>> = _recipes.asStateFlow()
     var categories by mutableStateOf(listOf<Categories>())
+    var filteredRecipes = MutableStateFlow(listOf<Recipe>())
 
 
 
     init{
         viewModelScope.launch {
             repository.getAllFavorites().collect{
-                    listOfRecipes -> _recipes.value = listOfRecipes
-
+                    listOfRecipes -> if(listOfRecipes.isNullOrEmpty()){
+                Log.d("CategoryScreenViewModel", "No Recipes")
+            } else {
+                _recipes.value = listOfRecipes
+            }
             }
         }
     }
@@ -37,12 +43,15 @@ class CategoriesScreenViewModel (private val repository: RecipeRepository): View
         categories = list
     }
 
-    fun getRecipeByCategory(categories: List<Categories>): List<Recipe> {
-        val filteredRecipes = _recipes.value.filter { recipe ->
+    fun getRecipeByCategory(categories: List<Categories>) {
+         filteredRecipes = _recipes.asStateFlow() { recipe ->
             recipe.category.any { it in categories }
         }
+    }
 
-        return filteredRecipes
+    suspend fun toggleFavorite(recipe: Recipe) {
+        recipe.isFavorite = !recipe.isFavorite
+        repository.updateRecipe(recipe)
     }
 
 }
