@@ -83,13 +83,18 @@ fun MainContent(viewModel: AddEditScreenViewModel,
     val coroutineScope = rememberCoroutineScope()
 
     NewPhotoPickerAndroid13Theme {
-        var selectedImageUri by remember {
-            mutableStateOf<Uri?>(null)
-        }
-
         val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
             contract = ActivityResultContracts.PickVisualMedia(),
-            onResult = { uri -> selectedImageUri = uri }
+            onResult = {
+                    uri ->
+                run {
+                    if (viewModel.images.size == 0) {
+                        viewModel.images.add(uri.toString())
+                    } else {
+                        viewModel.images[0] = uri.toString()
+                    }
+                }
+            }
         )
 
         Column {
@@ -159,12 +164,14 @@ fun MainContent(viewModel: AddEditScreenViewModel,
                         .size(130.dp, 100.dp)
                         .align(Alignment.CenterHorizontally)
                 ) {
-                    AsyncImage(
-                        model = selectedImageUri,
-                        contentDescription = null,
-                        modifier = Modifier.fillMaxWidth(),
-                        contentScale = ContentScale.Crop
-                    )
+                    if(viewModel.images.size > 0) {
+                        AsyncImage(
+                            model = viewModel.images[0],
+                            contentDescription = null,
+                            modifier = Modifier.fillMaxWidth(),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
                 }
 
 

@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.example.yummynotes.navigation.Screen
 import com.example.yummynotes.widgets.SimpleTopAppBar
 import com.example.yummynotes.R
@@ -55,8 +56,8 @@ fun RecipeScreen(navController: NavController, recipeID: Int) {
     // this check is necessary because recipe WILL be a null-value after deleting
     // this is probably not the best way to do it
     if (recipe != null && recipe.value != null) {
-        val imageID: Int = if (recipe.value.images.isEmpty()) {
-            R.drawable.no_photos
+        val imageID: String = if (recipe.value.images.isEmpty()) {
+            LocalContext.current.resourceUri(R.drawable.no_photos).toString()
         } else {
             recipe.value.images[0]
         }
@@ -86,8 +87,8 @@ fun RecipeScreen(navController: NavController, recipeID: Int) {
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth()
                     )
-                    Image(
-                        painter = painterResource(id = imageID),
+                    AsyncImage(
+                        model = imageID,
                         contentDescription = "Bild von ${recipe.value.title}",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier

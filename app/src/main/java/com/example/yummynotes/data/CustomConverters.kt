@@ -9,13 +9,23 @@ class CustomConverters {
         return list.joinToString(separator = ";")
     }
     @TypeConverter
+    fun stringListToString(list: List<String>): String {
+        return list.joinToString(separator = "|")
+    }
+    @TypeConverter
     fun stringToIntList(string: String) : List<Int> {
         if(string.isNotEmpty()) {
             return string.split(";").map { it.toInt() }
         }
         return emptyList()
     }
-
+    @TypeConverter
+    fun stringToStringList(string: String) : List<String> {
+        if(string.isNotEmpty()) {
+            return string.split("|")
+        }
+        return emptyList()
+    }
     @TypeConverter
     fun categoryListToString(list: List<Categories>) : String {
         return list.joinToString(separator = ";")

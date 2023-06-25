@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.example.yummynotes.models.Recipe
 import com.example.yummynotes.models.HomeScreenViewModel
 import com.example.yummynotes.models.resourceUri
@@ -95,8 +96,8 @@ fun RecipeRow(recipe: Recipe,
               onRecipeClick: (Int) -> Unit,
               onFavIconClick: (Recipe) -> Unit = {}
 ) { //später werden mehrere Parameter eingefügt
-    var imageID: Int = if (recipe.images.isEmpty()) {
-        R.drawable.no_photos
+    var imageID: String = if (recipe.images.isEmpty()) {
+        LocalContext.current.resourceUri(R.drawable.no_photos).toString()
     } else {
         recipe.images[0]
     }
@@ -119,12 +120,13 @@ fun RecipeRow(recipe: Recipe,
             //horizontalAlignment = Alignment.End
         ) {
             Row(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp),
+                .fillMaxWidth()
+                .padding(10.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
             ){
             Text("${recipe.title}\n${recipe.description}",
-                modifier = Modifier.height(80.dp)
+                modifier = Modifier
+                    .height(80.dp)
                     .padding(10.dp))
                 Spacer(modifier= Modifier.width(5.dp))
 
@@ -138,20 +140,30 @@ fun RecipeRow(recipe: Recipe,
         }
             //later add the row and box etc when needed
             Box(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .height(200.dp)
                     .width(200.dp)
 
             ) {
-                Log.d("HomeScreen", "URI from id: ${LocalContext.current.resourceUri(imageID)}")
-                Image(painter = painterResource(id = imageID),
+                //Log.d("HomeScreen", "URI from id: ${LocalContext.current.resourceUri(imageID)}")
+
+               AsyncImage(model = imageID,
+                   contentDescription = null,
+                   contentScale = ContentScale.Crop,
+                   modifier = Modifier
+                       .fillMaxWidth()
+                       .height(200.dp)
+                       .width(200.dp))
+
+                /*Image(painter = painterResource(id = imageID),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(200.dp)
                         .width(200.dp)
-                )
+                )*/
                 Box(
                     modifier = Modifier
                         .align(Alignment.TopEnd)

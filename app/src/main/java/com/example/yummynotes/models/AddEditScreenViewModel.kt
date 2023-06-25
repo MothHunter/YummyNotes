@@ -43,7 +43,7 @@ class AddEditScreenViewModel(private val repository: RecipeRepository, val recip
     var instructions by mutableStateOf("")
     // TODO: change initial value to false as soon as input validation is implemented
     var buttonEnabled by mutableStateOf(true)
-
+    var images by mutableStateOf(mutableListOf<String>())
     // TODO: add fields for images and categories
 
     init {
@@ -103,7 +103,7 @@ class AddEditScreenViewModel(private val repository: RecipeRepository, val recip
             description = description,
             ingredients = ingredients,
             instructions = instructions,
-            images = listOf<Int>(),
+            images = images,
             category = categories,
             isFavorite = false
         )
