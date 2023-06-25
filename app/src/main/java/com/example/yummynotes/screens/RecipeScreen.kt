@@ -18,11 +18,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
@@ -51,6 +55,23 @@ fun RecipeScreen(navController: NavController, recipeID: Int) {
 
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
+    val lifeCycleOwner = LocalLifecycleOwner.current
+
+    // this allows us to observe LifeCycleEvents
+    // needed to stop TTS when screen is closed
+    DisposableEffect(lifeCycleOwner) {
+        val observer = LifecycleEventObserver {source, event ->
+            if(event == Lifecycle.Event.ON_STOP) {
+                viewModel.stopTTS()
+            }
+        }
+        lifeCycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifeCycleOwner.lifecycle.removeObserver(observer)
+        }
+
+    }
+
 
 
     // this check is necessary because recipe WILL be a null-value after deleting
@@ -161,6 +182,7 @@ fun RecipeScreen(navController: NavController, recipeID: Int) {
         }
     }
 }
+
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable

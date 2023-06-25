@@ -8,6 +8,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.yummynotes.repository.RecipeRepository
@@ -27,6 +29,10 @@ class RecipeScreenViewModel(
     //delete or leave, not sure
     val images = recipeState.value.images
     private var textToSpeech: TextToSpeech? = null
+
+    fun stopTTS() {
+        textToSpeech?.stop()
+    }
 
 
     init {
@@ -62,4 +68,6 @@ class RecipeScreenViewModel(
             }
         }
     }
+
+
 }
