@@ -33,7 +33,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.yummynotes.models.Recipe
 import com.example.yummynotes.models.HomeScreenViewModel
-import com.example.yummynotes.models.resourceUri
+//import com.example.yummynotes.models.resourceUri
 
 import com.example.yummynotes.widgets.TopNavigationBar
 
@@ -97,7 +97,7 @@ fun RecipeRow(recipe: Recipe,
               onFavIconClick: (Recipe) -> Unit = {}
 ) { //später werden mehrere Parameter eingefügt
     var imageID: String = if (recipe.images.isEmpty()) {
-        LocalContext.current.resourceUri(R.drawable.no_photos).toString()
+        "android.resource://com.example.yummynotes/drawable/no_photos"
     } else {
         recipe.images[0]
     }

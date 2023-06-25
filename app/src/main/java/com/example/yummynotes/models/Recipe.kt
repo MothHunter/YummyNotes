@@ -24,7 +24,7 @@ data class Recipe(
     var instructions: String = "",
     // TODO: image references need to be changed from Int to URI everywhere
     //  to be able to add new images!!
-    val images: List<String> = emptyList(), //noch korrigieren weil wir nicht urls haben
+    val images: List<String> = emptyList(),
     val category: List<Categories> = listOf(),
     var isFavorite: Boolean = false // --,> das wird bei der Datenbank relevant
 ){
@@ -36,6 +36,7 @@ data class Recipe(
 
 // Usage in Composable:
 // val imageUri = LocalContext.current.resourceUri(imageID)
+/*
 fun Context.resourceUri(resourceId: Int): Uri = with(resources) {
     Uri.Builder()
         .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
@@ -44,7 +45,7 @@ fun Context.resourceUri(resourceId: Int): Uri = with(resources) {
         .appendPath(getResourceEntryName(resourceId))
         .build()
 }
-
+*/
 
 fun getRecipes(): List<Recipe> {
     return listOf(
@@ -75,7 +76,7 @@ fun getRecipes(): List<Recipe> {
             instructions = "Den fertigen Pizzateig aus der Verpackung nehmen und auf einer leicht bemehlten Oberfläche ausrollen. Den Backofen gemäß den Anweisungen auf der Verpackung des Pizzateigs vorheizen. Die Tomatensauce gleichmäßig auf dem ausgerollten Pizzateig verteilen, dabei einen kleinen Rand frei lassen. Den Mozzarella-Käse in Scheiben schneiden oder zupfen und auf der Sauce verteilen. Die Salami hinzufügen. Nach Belieben Kräuter und Gewürze wie Oregano, Basilikum oder Knoblauchpulver über den Belag streuen. Den belegten Pizzateig auf ein mit Backpapier ausgelegtes Backblech oder eine Pizzapfanne legen. Den Pizzateig gemäß den Anweisungen auf der Verpackung des Pizzateigs backen, in der Regel bei einer bestimmten Temperatur für eine bestimmte Zeit.",
             isFavorite = false,
             category = listOf(Categories.HAUPTSPEISEN, Categories.MEDITERRAN, Categories.FLEISCH),
-            images = listOf(R.drawable.pizza.toString())
+            images = listOf("android.resource://com.example.yummynotes/drawable/pizza")
         ),
         Recipe(
             title = "Curry",
@@ -94,7 +95,7 @@ fun getRecipes(): List<Recipe> {
             instructions = "Das Hühnerfleisch in einer Pfanne mit etwas Öl anbraten, bis es goldbraun ist. Anschließend aus der Pfanne nehmen und beiseite stellen. In derselben Pfanne die fein gehackten Zwiebeln und den gepressten Knoblauch anbraten, bis sie goldbraun sind und ein angenehmer Duft entsteht. Die Mango schälen, entkernen und in Würfel schneiden. Den Reis nach Packungsanweisung kochen und beiseite stellen. Den geriebenen Ingwer sowie die Paprikastreifen zur Zwiebel-Knoblauch-Mischung geben und für weitere 2-3 Minuten braten, bis die Paprika leicht weich ist. Das Currypulver, Kurkuma und Kreuzkümmel hinzufügen. Gut umrühren, um die Gewürze gleichmäßig zu verteilen. Das angebratene Hühnerfleisch und die Mango-Würfel in die Pfanne geben und gut vermischen. Die Kokosmilch hinzufügen und zum Kochen bringen. Die Hitze reduzieren und das Curry etwa 15-20 Minuten köcheln lassen, bis das Hühnerfleisch zart ist und die Sauce eingedickt ist. Das Curry mit Salz abschmecken und gegebenenfalls nachwürzen. Das Curry mit Hühnerfleisch und Mango servieren, zusammen mit dem gekochten Reis.",
             isFavorite = false,
             category = listOf(Categories.SNACKS, Categories.NACHSPEISEN),
-            images = listOf(R.drawable.pfannkuchen.toString())
+            images = listOf("android.resource://com.example.yummynotes/drawable/curry")
         ),
         Recipe(
             title = "Pfannkuchen",
@@ -109,7 +110,7 @@ fun getRecipes(): List<Recipe> {
             instructions = "In einer großen Schüssel das Mehl, den Zucker, das Backpulver und das Salz vermischen. In einer separaten Schüssel die Eier aufschlagen und leicht verquirlen. Die Milch hinzufügen und gut vermischen. Die Ei-Milch-Mischung langsam zu den trockenen Zutaten geben und mit einem Schneebesen zu einem glatten Teig verrühren. Dabei darauf achten, keine Klumpen zu hinterlassen. Eine Pfanne bei mittlerer Hitze erhitzen und etwas Butter oder Öl darin schmelzen lassen. Eine kleine Kelle des Teigs in die Pfanne geben und ihn gleichmäßig verteilen, um einen runden Pfannkuchen zu formen. Den Pfannkuchen von beiden Seiten goldbraun backen, bis er aufgegangen und leicht knusprig ist. Den fertigen Pfannkuchen auf einen Teller legen und warm halten. Den Vorgang mit dem restlichen Teig wiederholen, bis alle Pfannkuchen gebacken sind. Die Pfannkuchen nach Belieben mit Toppings wie Ahornsirup, Früchten, Schokoladensauce oder herzhaften Füllungen servieren und genießen.",
             isFavorite = false,
             category = listOf(Categories.HAUPTSPEISEN, Categories.FLEISCH),
-            images = listOf(R.drawable.curry.toString())
+            images = listOf("android.resource://com.example.yummynotes/drawable/pfannkuchen")
         ),
         Recipe(
             title = "Mozarellaplatte",
@@ -123,7 +124,7 @@ fun getRecipes(): List<Recipe> {
             instructions = "Die frischen Mozzarellakugeln in Scheiben schneiden. Die Tomaten ebenfalls in Scheiben schneiden. Auf einem Servierteller abwechselnd Mozzarella- und Tomatenscheiben anordnen, dabei darauf achten, dass die Farben schön abwechseln. Die Basilikumblätter abzupfen und über die Mozzarella-Tomaten-Scheiben streuen. Die Mozarellaplatte leicht mit Salz und Pfeffer würzen. Etwas Olivenöl über die Scheiben träufeln und mit einem Hauch von Balsamico-Glace garnieren. Die Mozarellaplatte servieren und genießen.",
             isFavorite = false,
             category = listOf(Categories.VORSPEISEN, Categories.MEDITERRAN, Categories.VEGETARISCH),
-            images = listOf(R.drawable.mozarellaplatte.toString())
+            images = listOf("android.resource://com.example.yummynotes/drawable/mozarellaplatte")
         ),
     )
 }

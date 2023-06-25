@@ -57,7 +57,7 @@ fun RecipeScreen(navController: NavController, recipeID: Int) {
     // this is probably not the best way to do it
     if (recipe != null && recipe.value != null) {
         val imageID: String = if (recipe.value.images.isEmpty()) {
-            LocalContext.current.resourceUri(R.drawable.no_photos).toString()
+            "android.resource://com.example.yummynotes/drawable/no_photos"
         } else {
             recipe.value.images[0]
         }
