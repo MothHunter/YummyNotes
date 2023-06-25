@@ -1,6 +1,8 @@
 package com.example.yummynotes
 
+import android.app.Activity
 import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,6 +27,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.core.app.ActivityCompat.finishAffinity
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.yummynotes.models.Recipe
@@ -41,6 +44,12 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun HomeScreen(navController: NavController) {
+    //Auf keinen fall löschen! closes app when pressing back button in HomeScreen
+    //wir brauchen es für reqirement 23
+    val activity = (LocalContext.current as? Activity)
+    BackHandler {
+        activity?.finish()
+    }
 
     val viewModel: HomeScreenViewModel = viewModel(
         factory = Injector.provideHomeScreenViewModelFactory(
