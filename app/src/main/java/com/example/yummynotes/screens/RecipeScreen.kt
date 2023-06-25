@@ -1,5 +1,6 @@
 package com.example.yummynotes.screens
 
+import android.content.Context
 import android.widget.Button
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -26,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.example.yummynotes.models.RecipeViewModel
 import com.example.yummynotes.navigation.Screen
@@ -36,12 +38,12 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 
 @Composable
-fun RecipeScreen(navController: NavController, viewModel: RecipeViewModel, recipeID: Int) {
+fun RecipeScreen(navController: NavController, viewModel: RecipeViewModel, recipeID: Int, context: Context) {
     val isButtonEnabledFlow = remember { MutableStateFlow(false) }
     val isButtonEnabled by isButtonEnabledFlow.collectAsState()
     val recipe = viewModel.getRecipeByID(recipeID)
     val context = LocalContext.current
-    var imageID: Int = if (recipe.images.isEmpty()) {
+    var imageID: Int = if (recipe.images.isEmpty()) { //URI
         R.drawable.no_photos
     } else {
         recipe.images[0]
@@ -72,6 +74,8 @@ fun RecipeScreen(navController: NavController, viewModel: RecipeViewModel, recip
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
                 )
+                val imageUri = ContextCompat.getDrawable(context, imageID)?.toUri()
+
                 Image(
                     painter = painterResource(id = imageID),
                     contentDescription = "Bild von ${recipe.title}",
@@ -137,6 +141,8 @@ fun RecipeScreen(navController: NavController, viewModel: RecipeViewModel, recip
         }
     }
 }
+
+
 
 @Composable
 fun EditButton(

@@ -15,7 +15,7 @@ class SeedDatabaseWorker(
     override suspend fun doWork(): Result = coroutineScope {
         try {
             val database = RecipeDatabase.getDatabase(applicationContext)
-            populateDatabase(database)
+            populateDatabase(database,context)
             Result.success()
         } catch (ex: Exception) {
             Log.e(TAG, "Error seeding database", ex)
@@ -27,12 +27,12 @@ class SeedDatabaseWorker(
         private const val TAG = "SeedDatabaseWorker"
     }
 
-    private suspend fun populateDatabase(database: RecipeDatabase){
+    private suspend fun populateDatabase(database: RecipeDatabase, context: Context){
         Log.d(TAG, "populating database")
         val dao = database.recipeDao()
 
         dao.deleteAllRecipes()
-        getRecipes().forEach{
+        getRecipes(context).forEach{
             dao.add(it)
         }
     }
