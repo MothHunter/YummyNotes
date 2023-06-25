@@ -1,6 +1,7 @@
 package com.example.yummynotes.screens
 
 import android.content.Context
+import android.net.Uri
 import android.widget.Button
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -33,6 +34,7 @@ import com.example.yummynotes.models.RecipeViewModel
 import com.example.yummynotes.navigation.Screen
 import com.example.yummynotes.widgets.SimpleTopAppBar
 import com.example.yummynotes.R
+import com.example.yummynotes.models.resourceUri
 import com.example.yummynotes.widgets.TopNavigationBar
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -43,8 +45,8 @@ fun RecipeScreen(navController: NavController, viewModel: RecipeViewModel, recip
     val isButtonEnabled by isButtonEnabledFlow.collectAsState()
     val recipe = viewModel.getRecipeByID(recipeID)
     val context = LocalContext.current
-    var imageID: Int = if (recipe.images.isEmpty()) { //URI
-        R.drawable.no_photos
+    var imageUri: Uri = if (recipe.images.isEmpty()) { //URI
+        LocalContext.current.resourceUri(R.drawable.no_photos)
     } else {
         recipe.images[0]
     }
@@ -74,9 +76,10 @@ fun RecipeScreen(navController: NavController, viewModel: RecipeViewModel, recip
                     textAlign = TextAlign.Center,
                     modifier = Modifier.fillMaxWidth()
                 )
-                val imageUri = ContextCompat.getDrawable(context, imageID)?.toUri()
+                //val imageUri = ContextCompat.getDrawable(context, imageID)?.toUri()
 
                 Image(
+                    // TODO: use URI for painter
                     painter = painterResource(id = imageID),
                     contentDescription = "Bild von ${recipe.title}",
                     contentScale = ContentScale.Crop,
@@ -84,6 +87,8 @@ fun RecipeScreen(navController: NavController, viewModel: RecipeViewModel, recip
                         .fillMaxWidth()
                         .height(210.dp)
                 )
+                Image
+
                 Text(
                     text = "Beschreibung",
                     fontSize = 30.sp,

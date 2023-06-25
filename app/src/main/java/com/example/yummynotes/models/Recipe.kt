@@ -38,6 +38,7 @@ fun Context.resourceUri(resourceId: Int): Uri = with(resources) {
 
 fun getRecipes(Context:Context): List<Recipe> {
 
+
     return listOf(
         Recipe(
             title = "Linsensuppe",

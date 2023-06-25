@@ -9,7 +9,7 @@ import com.example.yummynotes.models.getRecipes
 import kotlinx.coroutines.coroutineScope
 
 class SeedDatabaseWorker(
-    context: Context,
+    val context: Context,
     workerParams: WorkerParameters
 ) : CoroutineWorker(context, workerParams) {
     override suspend fun doWork(): Result = coroutineScope {
@@ -28,6 +28,7 @@ class SeedDatabaseWorker(
     }
 
     private suspend fun populateDatabase(database: RecipeDatabase, context: Context){
+
         Log.d(TAG, "populating database")
         val dao = database.recipeDao()
 
