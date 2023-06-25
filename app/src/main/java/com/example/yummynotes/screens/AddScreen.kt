@@ -1,6 +1,5 @@
 package com.example.yummynotes.screens
 
-import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -29,7 +28,7 @@ import com.example.yummynotes.models.Categories
 import com.example.yummynotes.models.NEW_RECIPE
 import com.example.yummynotes.ui.theme.NewPhotoPickerAndroid13Theme
 import com.example.yummynotes.utils.Injector
-import com.example.yummynotes.widgets.SimpleTopAppBar
+import com.example.yummynotes.widgets.SimpleAppBar
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
@@ -45,7 +44,7 @@ fun AddScreen(navController: NavHostController, recipeID: Int) {
     )
 
     Column {
-        SimpleTopAppBar(
+        SimpleAppBar(
             title = if (recipeID == NEW_RECIPE) {
                 "Rezept hinzufügen"
             } else {

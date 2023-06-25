@@ -14,12 +14,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.yummynotes.repository.RecipeRepository
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.*
+import kotlin.random.Random
 
 class RecipeScreenViewModel(
     private val repository: RecipeRepository,
@@ -29,6 +27,9 @@ class RecipeScreenViewModel(
     //delete or leave, not sure
     val images = recipeState.value.images
     private var textToSpeech: TextToSpeech? = null
+
+
+
 
     fun stopTTS() {
         textToSpeech?.stop()
@@ -68,6 +69,7 @@ class RecipeScreenViewModel(
             }
         }
     }
+
 
 
 }

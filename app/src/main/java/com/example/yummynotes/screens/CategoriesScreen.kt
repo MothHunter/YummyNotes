@@ -5,28 +5,29 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.example.yummynotes.RecipeList
+import com.example.yummynotes.R
 import com.example.yummynotes.RecipeRow
 import com.example.yummynotes.models.*
 import com.example.yummynotes.navigation.Screen
 import com.example.yummynotes.utils.Injector
-import com.example.yummynotes.widgets.SimpleTopAppBar
+import com.example.yummynotes.widgets.CategoriesScreenBar
+import com.example.yummynotes.widgets.SimpleAppBar
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
@@ -38,10 +39,27 @@ fun CategoriesScreen(navController: NavController){
         )
     )
     Column {
-        SimpleTopAppBar(
+        CategoriesScreenBar(
             title = "Finde Rezepte",
             arrowBackClicked = { navController.popBackStack() },
-            content = { /* Custom content here */ }
+            content = {
+                DropdownMenuItem(onClick = {
+                    val recipe = viewModel.recommendRecipe(viewModel.filteredRecipes)
+                    recipe?.let { val recipeID = recipe.id }
+                    navController.navigate(Screen.RecipeScreen.route)}) {
+                    Row {
+                        Icon(
+                             imageVector = Icons.Filled.Star,
+                            contentDescription = "Rezept vorschlagen",
+                            modifier = Modifier.padding(4.dp)
+                        )
+                        Text(
+                            text = "Rezept vorschlagen", modifier = Modifier
+                                .width(100.dp)
+                                .padding(4.dp).fillMaxWidth()
+                        )
+                    }
+                }}
         )
         Spacer(modifier = Modifier.width(8.dp))
 
@@ -49,6 +67,7 @@ fun CategoriesScreen(navController: NavController){
 
     }
 }
+
 @Composable
 fun MainContent(viewModel: CategoriesScreenViewModel, navController: NavController) {
     val recipe = viewModel.recipes.collectAsState()
@@ -70,12 +89,13 @@ fun MainContent(viewModel: CategoriesScreenViewModel, navController: NavControll
             horizontalAlignment = Alignment.Start
         ) {
             CategoryPicker(viewModel, viewModel.categories)
+
         }
 
 
         FilteredList(navController = navController, viewModel = viewModel)
 
-
+        /*
         Spacer(modifier = Modifier.height(130.dp))
         Column(modifier = Modifier.fillMaxWidth()) {
             Button(
@@ -101,7 +121,7 @@ fun MainContent(viewModel: CategoriesScreenViewModel, navController: NavControll
             ) {
                 Text(text = "Rezeptempfehlung")
             }
-        }
+        }*/
     }
 }
 

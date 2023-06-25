@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 class CategoriesScreenViewModel(private val repository: RecipeRepository) : ViewModel() {
     private val _recipes = MutableStateFlow(listOf<Recipe>())
@@ -59,6 +60,20 @@ class CategoriesScreenViewModel(private val repository: RecipeRepository) : View
             }
         }
     }
+
+    fun recommendRecipe(filteredRecipes: List<Recipe>): Recipe?{
+        if (filteredRecipes.isEmpty()){
+            Log.d("recomendRecipe", "filteredRecipes is empty!")
+        }
+        else{
+            val seed = System.currentTimeMillis()
+            val random = Random(seed)
+            val randomIndex = random.nextInt(filteredRecipes.size)
+            return filteredRecipes[randomIndex]
+        }
+        return null
+    }
+
 
 
 

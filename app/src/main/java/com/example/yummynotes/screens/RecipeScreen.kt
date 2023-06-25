@@ -1,11 +1,7 @@
 package com.example.yummynotes.screens
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -19,23 +15,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.yummynotes.navigation.Screen
-import com.example.yummynotes.widgets.SimpleTopAppBar
-import com.example.yummynotes.R
+import com.example.yummynotes.widgets.SimpleAppBar
 import com.example.yummynotes.models.*
 import com.example.yummynotes.utils.Injector
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 
@@ -46,12 +37,15 @@ fun RecipeScreen(navController: NavController, recipeID: Int) {
     val isButtonEnabled by isButtonEnabledFlow.collectAsState()
     */
 
+
+
     val viewModel: RecipeScreenViewModel = viewModel(
         factory = Injector.provideRecipeScreenViewModelFactory(
             LocalContext.current,
             recipeID = recipeID
         )
     )
+
     val recipe = viewModel.recipeState.collectAsState()
 
     val coroutineScope = rememberCoroutineScope()
@@ -88,7 +82,7 @@ fun RecipeScreen(navController: NavController, recipeID: Int) {
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(5.dp)
         ) {
-            SimpleTopAppBar(
+            SimpleAppBar(
                 title = recipe.value.title,
                 arrowBackClicked = { navController.popBackStack() },
                 content = {
