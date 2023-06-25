@@ -45,8 +45,12 @@ fun CategoriesScreen(navController: NavController){
             content = {
                 DropdownMenuItem(onClick = {
                     val recipe = viewModel.recommendRecipe(viewModel.filteredRecipes)
-                    recipe?.let { val recipeID = recipe.id }
-                    navController.navigate(Screen.RecipeScreen.route)}) {
+                    recipe?.let {
+                        val recipeID = recipe.id
+                        navController.navigate(Screen.RecipeScreen.withId(recipeID))
+                    }
+                }
+                ) {
                     Row {
                         Icon(
                              imageVector = Icons.Filled.Star,
