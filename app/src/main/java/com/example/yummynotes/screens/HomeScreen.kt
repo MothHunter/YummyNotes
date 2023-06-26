@@ -4,6 +4,7 @@ package com.example.yummynotes
 
 
 import android.app.Activity
+import android.graphics.fonts.Font
 import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -26,7 +27,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
@@ -70,7 +73,7 @@ viewModel: HomeScreenViewModel) {
     val recipesState by viewModel.recipes.collectAsState()
     val coroutineScope = rememberCoroutineScope()
 
-    LazyColumn(modifier = Modifier.background(color = Color.LightGray)){
+    LazyColumn(modifier = Modifier.background(MaterialTheme.colors.background)){
         items(items = recipesState) { recipeItem -> //aus der Liste recipes bekommt es der Reihe nach Elemente übergeben --> geh durch die Liste
             RecipeRow(
                 recipe = recipeItem,
@@ -113,7 +116,7 @@ fun RecipeRow(recipe: Recipe,
 
         elevation = 5.dp,
         shape = RoundedCornerShape(15.dp),
-        backgroundColor = Color.Gray
+        backgroundColor = MaterialTheme.colors.primaryVariant
 
     ) {
         Column(
@@ -130,6 +133,7 @@ fun RecipeRow(recipe: Recipe,
                     modifier = Modifier
                         .height(80.dp)
                         .padding(10.dp)
+
                 )
 
                 Icon(imageVector = if(recipe.isFavorite) Icons.Filled.Favorite else Icons.Default.FavoriteBorder ,

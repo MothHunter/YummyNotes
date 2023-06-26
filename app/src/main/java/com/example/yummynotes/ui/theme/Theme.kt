@@ -1,5 +1,6 @@
 package com.example.yummynotes.ui.theme
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
@@ -12,13 +13,14 @@ private val DarkColorPalette = darkColors(
     secondary = Teal200
 )
 
+@SuppressLint("ConflictingOnColor")
 private val LightColorPalette = lightColors(
     primary = Navigation,
     primaryVariant = Cards,
     secondary = CategoryButtons,
     onSecondary = CategoryButtonsClicked,
-    surface = Buttons,
-    onSurface = ButtonsClicked,
+    surface = Background,
+    onSurface = Navigation,
     onPrimary = DrawableColor,
     background = Background,
     secondaryVariant = Box

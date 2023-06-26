@@ -1,5 +1,6 @@
 package com.example.yummynotes.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -15,7 +16,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -105,7 +108,10 @@ fun RecipeScreen(navController: NavController, recipeID: Int) {
                         text = recipe.value.title,
                         fontSize = 40.sp,
                         textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth()
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp)
                     )
                     AsyncImage(
                         model = imageID,
@@ -120,34 +126,47 @@ fun RecipeScreen(navController: NavController, recipeID: Int) {
                         text = stringResource(id = R.string.description),
                         fontSize = 30.sp,
                         textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth()
+                        fontWeight = FontWeight.SemiBold,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp)
                     )
                     Text(
                         text = recipe.value.description,
                         fontSize = 20.sp,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp)
                     )
                     Text(
                         text = stringResource(id = R.string.ingredients),
                         fontSize = 30.sp,
                         textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp)
                     )
                     Text(
                         text = recipe.value.ingredients.replace(", ", "\n"),
                         fontSize = 20.sp,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp)
                     )
                     Text(
                         text = stringResource(id = R.string.instructions),
                         fontSize = 30.sp,
                         textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp)
                     )
                     Text(
                         text = recipe.value.instructions,
                         fontSize = 20.sp,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp)
                     )
                     Spacer(modifier = Modifier.padding(10.dp))
                     Row(
@@ -169,7 +188,8 @@ fun RecipeScreen(navController: NavController, recipeID: Int) {
                                     viewModel.onDeleteButtonClick(recipeID)
                                 }
                             },
-                            modifier = Modifier.offset(150.dp, 0.dp)
+                            modifier = Modifier
+                                .offset(150.dp, 0.dp)
                         ) {
                             Text(text = stringResource(id = R.string.delete_recipe))
                         }
@@ -193,7 +213,7 @@ fun CategoriesList(categories: List<Categories>) {
             Card(modifier = Modifier.padding(4.dp),
                 elevation = 2.dp,
                 shape = RoundedCornerShape(15.dp),
-                backgroundColor = Color.LightGray
+                backgroundColor = MaterialTheme.colors.primaryVariant
             ){
                 Text(modifier = Modifier.padding(12.dp,4.dp),
                     text= getLocalizedCategory(category, LocalContext.current))
@@ -211,9 +231,11 @@ fun EditButton(
         imageVector = Icons.Default.Edit,
         contentDescription = stringResource(id = R.string.edit_recipe),
         tint = Color.White,
-        modifier = Modifier.clickable {
-            onClick()
-        }
+        modifier = Modifier
+            .padding(5.dp)
+            .clickable {
+                onClick()
+            }
     )
 }
 
