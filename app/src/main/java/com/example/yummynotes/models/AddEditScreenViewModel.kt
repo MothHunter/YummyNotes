@@ -118,6 +118,7 @@ class AddEditScreenViewModel(private val repository: RecipeRepository, val recip
             ingredients = ingredients,
             instructions = instructions,
             category = categories,
+            images =  images
             // TODO: this needs to be included, but fields currently still missing
             /*
             images = images,
