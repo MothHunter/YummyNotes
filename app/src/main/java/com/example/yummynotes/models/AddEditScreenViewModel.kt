@@ -86,7 +86,7 @@ class AddEditScreenViewModel(private val repository: RecipeRepository, val recip
             ingredients = ingredients,
             instructions = instructions,
             category = categories,
-            images =  images
+            //images =  images
         )
 
         repository.updateRecipe(updatedRecipe)
