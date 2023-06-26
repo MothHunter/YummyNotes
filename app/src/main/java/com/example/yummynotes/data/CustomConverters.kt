@@ -4,21 +4,12 @@ import androidx.room.TypeConverter
 import com.example.yummynotes.models.Categories
 
 class CustomConverters {
-    @TypeConverter
-    fun intListToString(list: List<Int>): String {
-        return list.joinToString(separator = ";")
-    }
+
     @TypeConverter
     fun stringListToString(list: List<String>): String {
         return list.joinToString(separator = "|")
     }
-    @TypeConverter
-    fun stringToIntList(string: String) : List<Int> {
-        if(string.isNotEmpty()) {
-            return string.split(";").map { it.toInt() }
-        }
-        return emptyList()
-    }
+
     @TypeConverter
     fun stringToStringList(string: String) : List<String> {
         if(string.isNotEmpty()) {

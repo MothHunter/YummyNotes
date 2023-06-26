@@ -54,7 +54,7 @@ class CategoriesScreenViewModel(private val repository: RecipeRepository) : View
     fun filterRecipesByCategory() {
         filteredRecipes = _recipes.asStateFlow().value.filter {
             if (categories.isEmpty()) {
-                it.title.length >= 0//this is only a dumb way to say "give me everything"
+                it.title.length >= 0//this is only a dumb workaround for "don't filter"
             } else {
                 it.category.containsAll(categories)
             }

@@ -58,7 +58,6 @@ fun HomeScreen(navController: NavController) {
     Column{
         TopNavigationBar(title = stringResource(id = R.string.my_recipes), navController)
         RecipeList(viewModel = viewModel, navController = navController, modifier = Modifier)
-        //modifier hab ich hinzugefügt
     }
 }
 
@@ -121,20 +120,26 @@ fun RecipeRow(recipe: Recipe,
     ) {
         Column(
             verticalArrangement = Arrangement.Top,
-            //horizontalAlignment = Alignment.End
         ) {
             Box(modifier = Modifier
                 .fillMaxWidth()
                 .padding(10.dp),
-                    //horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(
-                    "${recipe.title}\n${recipe.description}",
-                    modifier = Modifier
-                        .height(80.dp)
-                        .padding(10.dp)
+                Column(modifier = Modifier
+                    .height(80.dp)
+                    .padding(10.dp, 10.dp, 10.dp, 0.dp)) {
 
-                )
+                    Text(
+                        text= recipe.title,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp
+                    )
+                    Text(
+                        text = recipe.description
+
+                    )
+
+                }
 
                 Icon(imageVector = if(recipe.isFavorite) Icons.Filled.Favorite else Icons.Default.FavoriteBorder ,
                     contentDescription = stringResource(id = R.string.favorite_recipes)
@@ -154,7 +159,6 @@ fun RecipeRow(recipe: Recipe,
                     .width(200.dp)
 
             ) {
-                //Log.d("HomeScreen", "URI from id: ${LocalContext.current.resourceUri(imageID)}")
 
                AsyncImage(model = imageID,
                    contentDescription = null,
