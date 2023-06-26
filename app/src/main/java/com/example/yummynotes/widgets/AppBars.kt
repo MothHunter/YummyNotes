@@ -1,12 +1,10 @@
 package com.example.yummynotes.widgets
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
@@ -16,6 +14,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.modifier.modifierLocalConsumer
+import androidx.compose.ui.modifier.modifierLocalMapOf
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -55,7 +55,7 @@ fun CategoriesScreenBar(
 ) {
     var showMenu by remember { mutableStateOf(false) }
     TopAppBar(
-        backgroundColor = Color.DarkGray,
+        backgroundColor = MaterialTheme.colors.primary,
         title = {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -84,7 +84,9 @@ fun CategoriesScreenBar(
             ) {
                 content()
             }
-        }
+        },
+
+        modifier = Modifier.background(MaterialTheme.colors.onPrimary)
 
         /*
         actions = {
@@ -101,7 +103,7 @@ fun SimpleAppBar(
     content: @Composable () -> Unit
 ) {
     TopAppBar(
-        backgroundColor = Color.DarkGray,
+        backgroundColor = MaterialTheme.colors.primary,
         title = {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -135,7 +137,7 @@ fun TopNavigationBar(title: String, navController: NavController) {
 
     Column {
         TopAppBar(
-            backgroundColor = Color.DarkGray,
+            backgroundColor = MaterialTheme.colors.primary,
             title = {
                 Row { Text(text = title, textAlign = TextAlign.Center, color = Color.White) }
             },
