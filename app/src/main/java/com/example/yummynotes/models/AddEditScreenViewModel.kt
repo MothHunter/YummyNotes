@@ -24,7 +24,7 @@ class AddEditScreenViewModel(private val repository: RecipeRepository, val recip
     // TODO: change initial value to false as soon as input requirements are implemented
     var buttonEnabled by mutableStateOf(true)
     var categories by mutableStateOf(listOf<Categories>())
-    var images by mutableStateOf(mutableListOf<String>())
+    var images by mutableStateOf(listOf<String>())
 
     init {
         viewModelScope.launch {
@@ -36,6 +36,7 @@ class AddEditScreenViewModel(private val repository: RecipeRepository, val recip
                     ingredients = it.ingredients
                     instructions = it.instructions
                     categories = it.category
+                    images = it.images
                 }
             }
         }
@@ -86,7 +87,7 @@ class AddEditScreenViewModel(private val repository: RecipeRepository, val recip
             ingredients = ingredients,
             instructions = instructions,
             category = categories,
-            //images =  images
+            images =  images
         )
 
         repository.updateRecipe(updatedRecipe)

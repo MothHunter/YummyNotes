@@ -90,11 +90,7 @@ fun MainContent(viewModel: AddEditScreenViewModel,
             onResult = {
                     uri ->
                 run {
-                    if (viewModel.images.size == 0) {
-                        viewModel.images.add(uri.toString())
-                    } else {
-                        viewModel.images[0] = uri.toString()
-                    }
+                    viewModel.images = listOf(uri.toString())
                 }
             }
         )
