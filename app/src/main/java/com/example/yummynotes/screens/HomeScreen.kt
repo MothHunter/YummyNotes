@@ -12,9 +12,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
@@ -99,7 +97,7 @@ fun RecipeRow(recipe: Recipe,
 
 ) { //später werden mehrere Parameter eingefügt
     var imageID: String = if (recipe.images.isEmpty()) {
-        "android.resource://com.example.yummynotes/drawable/no_photos"
+        "android.resource://com.example.yummynotes/drawable/no_photo_variant2"
     } else {
         recipe.images[0]
     }
@@ -108,7 +106,8 @@ fun RecipeRow(recipe: Recipe,
         .fillMaxWidth()
         .padding(20.dp)
         .height(200.dp)
-        .clickable {
+        .clickable
+        {
             onRecipeClick(recipe.id)
         },
 
