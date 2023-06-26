@@ -268,14 +268,7 @@ fun FilteredRow(recipe: Recipe,
                         .height(200.dp)
                         .width(200.dp))
 
-                /*Image(painter = painterResource(id = imageID),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp)
-                        .width(200.dp)
-                )*/
+
                 Box(
                     modifier = Modifier
                         .align(Alignment.TopEnd)
@@ -288,91 +281,6 @@ fun FilteredRow(recipe: Recipe,
 
         }
     }}
-/*
-@Composable
-fun FilteredsggRow(modifier: Modifier, navController: NavController, viewModel: CategoriesScreenViewModel){
-    val recipes by viewModel.recipes.collectAsState()
-    val isButtonEnabledFlow = remember { MutableStateFlow(false) }
-    val isButtonEnabled by isButtonEnabledFlow.collectAsState()
-
-    val coroutineScope = rememberCoroutineScope()
-
-    Card(modifier = Modifier
-        .fillMaxWidth()
-        .padding(20.dp)
-        .height(200.dp)
-        ,
-
-        elevation = 5.dp,
-        shape = RoundedCornerShape(15.dp),
-        backgroundColor = Color.Gray
-
-    ) {
-        Column(
-            verticalArrangement = Arrangement.Top,
-            //horizontalAlignment = Alignment.End
-        ) {
-            LazyColumn{
-                items(items = recipes){ recipe ->
-
-            }
-            Row(modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ){
-                Text("${recipes.value.t}\n${recipe.description}",
-                    modifier = Modifier
-                        .height(80.dp)
-                        .padding(10.dp))
-                Spacer(modifier= Modifier.width(5.dp))
-
-                Icon(imageVector = Icons.Default.FavoriteBorder,
-                    contentDescription = "Lieblingsrezepte",
-                    modifier = Modifier.clickable {  }
-                )
-
-                // Text("Favorites")
-
-            }
-            //later add the row and box etc when needed
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp)
-                    .width(200.dp)
-
-            ) {
-                //Log.d("HomeScreen", "URI from id: ${LocalContext.current.resourceUri(imageID)}")
-
-                AsyncImage(model = imageID,
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp)
-                        .width(200.dp))
-
-                /*Image(painter = painterResource(id = imageID),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp)
-                        .width(200.dp)
-                )*/
-                Box(
-                    modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .padding(10.dp)
-                )
-
-
-            }
-
-
-        }
-    }}*/
 
 
 
