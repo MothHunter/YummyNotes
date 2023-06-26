@@ -4,20 +4,17 @@ import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
+import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.platform.LocalContext
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.yummynotes.R
 import com.example.yummynotes.models.Categories
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+
+
 
 
 const val NEW_RECIPE = -1
-
-@Serializable
 @Entity
 data class Recipe(
     @PrimaryKey (autoGenerate = true)
@@ -36,15 +33,6 @@ data class Recipe(
     override fun equals(other: Any?): Boolean {
         return super.equals(other)
     }
-}
-
-fun recipeToJson (recipe: Recipe) : String {
-    return Json.encodeToString(recipe.copy(images = emptyList()))
-}
-
-fun jsonToRecipe (jsonString: String) : Recipe {
-    return Json.decodeFromString<Recipe>(jsonString)
-
 }
 
 // Usage in Composable:
@@ -107,7 +95,7 @@ fun getRecipes(): List<Recipe> {
                     "1 TL Kreuzkümmel",
             instructions = "Das Hühnerfleisch in einer Pfanne mit etwas Öl anbraten, bis es goldbraun ist. Anschließend aus der Pfanne nehmen und beiseite stellen. In derselben Pfanne die fein gehackten Zwiebeln und den gepressten Knoblauch anbraten, bis sie goldbraun sind und ein angenehmer Duft entsteht. Die Mango schälen, entkernen und in Würfel schneiden. Den Reis nach Packungsanweisung kochen und beiseite stellen. Den geriebenen Ingwer sowie die Paprikastreifen zur Zwiebel-Knoblauch-Mischung geben und für weitere 2-3 Minuten braten, bis die Paprika leicht weich ist. Das Currypulver, Kurkuma und Kreuzkümmel hinzufügen. Gut umrühren, um die Gewürze gleichmäßig zu verteilen. Das angebratene Hühnerfleisch und die Mango-Würfel in die Pfanne geben und gut vermischen. Die Kokosmilch hinzufügen und zum Kochen bringen. Die Hitze reduzieren und das Curry etwa 15-20 Minuten köcheln lassen, bis das Hühnerfleisch zart ist und die Sauce eingedickt ist. Das Curry mit Salz abschmecken und gegebenenfalls nachwürzen. Das Curry mit Hühnerfleisch und Mango servieren, zusammen mit dem gekochten Reis.",
             isFavorite = false,
-            category = listOf(Categories.FLEISCH, Categories.HAUPTSPEISEN),
+            category = listOf(Categories.SNACKS, Categories.NACHSPEISEN),
             images = listOf("android.resource://com.example.yummynotes/drawable/curry")
         ),
         Recipe(
@@ -122,7 +110,7 @@ fun getRecipes(): List<Recipe> {
                     "Butter oder Öl zum Braten",
             instructions = "In einer großen Schüssel das Mehl, den Zucker, das Backpulver und das Salz vermischen. In einer separaten Schüssel die Eier aufschlagen und leicht verquirlen. Die Milch hinzufügen und gut vermischen. Die Ei-Milch-Mischung langsam zu den trockenen Zutaten geben und mit einem Schneebesen zu einem glatten Teig verrühren. Dabei darauf achten, keine Klumpen zu hinterlassen. Eine Pfanne bei mittlerer Hitze erhitzen und etwas Butter oder Öl darin schmelzen lassen. Eine kleine Kelle des Teigs in die Pfanne geben und ihn gleichmäßig verteilen, um einen runden Pfannkuchen zu formen. Den Pfannkuchen von beiden Seiten goldbraun backen, bis er aufgegangen und leicht knusprig ist. Den fertigen Pfannkuchen auf einen Teller legen und warm halten. Den Vorgang mit dem restlichen Teig wiederholen, bis alle Pfannkuchen gebacken sind. Die Pfannkuchen nach Belieben mit Toppings wie Ahornsirup, Früchten, Schokoladensauce oder herzhaften Füllungen servieren und genießen.",
             isFavorite = false,
-            category = listOf(Categories.NACHSPEISEN, Categories.SNACKS),
+            category = listOf(Categories.HAUPTSPEISEN, Categories.FLEISCH),
             images = listOf("android.resource://com.example.yummynotes/drawable/pfannkuchen")
         ),
         Recipe(

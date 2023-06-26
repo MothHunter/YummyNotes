@@ -85,6 +85,8 @@ fun RecipeScreen(navController: NavController, recipeID: Int) {
             verticalArrangement = Arrangement.spacedBy(5.dp)
         ) {
             SimpleAppBar(
+               // backgroundColor = MaterialTheme.colors.primary,
+
                 title = recipe.value.title,
                 arrowBackClicked = { navController.popBackStack() },
                 content = {

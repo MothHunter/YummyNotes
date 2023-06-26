@@ -55,7 +55,7 @@ fun CategoriesScreenBar(
 ) {
     var showMenu by remember { mutableStateOf(false) }
     TopAppBar(
-        backgroundColor = MaterialTheme.colors.primary,
+        backgroundColor = MaterialTheme.colors.primary, // hier greift man auf das colors.kt file zu
         title = {
             Row(
                 modifier = Modifier.fillMaxWidth(),
