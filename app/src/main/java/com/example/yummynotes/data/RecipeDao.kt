@@ -1,43 +1,31 @@
 package com.example.yummynotes.data
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.example.yummynotes.models.Recipe
 import kotlinx.coroutines.flow.Flow
 
-
 @Dao
-
 interface RecipeDao {
     @Insert
     suspend fun add(recipe: Recipe)
 
     @Update
-    suspend fun update(recipe:Recipe)
+    suspend fun update(recipe: Recipe)
 
-   // @Delete
-    //bei lackner suspend
-   // fun delete(recipe: Recipe)
+    @Delete
+    suspend fun delete(recipe: Recipe)
 
-   // @Query("SELECT * from recipe WHERE isFavorite = 1")
-   // fun getFavorites(): Flow<List<Recipe>>
+    @Query("DELETE FROM recipe")
+    suspend fun deleteAllRecipes()
 
-   // @Query("SELECT * from recipe WHERE dbId = :id")
-  //  fun get(id: Long): Flow<Recipe>
+    @Query("SELECT * FROM recipe")
+    fun getAllRecipes(): Flow<List<Recipe>>
 
-   // @Query("DELETE from recipe")
-  //  suspend fun deleteAll()
-    /* our structure:
-    Recipe(
-            id = 1,
-            title = "Pizza",
-            description = "Pizza mit Salami",
-            ingredients = "Pizzateig, Tomatensauce, Mozerella, Salami",
-            instructions = "Die Pizza bei 180 Grad in den Ofen schieben",
-            images = listOf(R.drawable.pizza)
-        )
-     */
+    @Query("SELECT * FROM recipe WHERE isFavorite = 1")
+    //@Florian: wie kann man das 1 durch true ersetzen?
+    fun getAllFavorites(): Flow<List<Recipe>>
+
+    @Query("SELECT * FROM recipe WHERE id =:recipeId")
+    fun getRecipeByID(recipeId: Int) : Flow<Recipe>
+
 }

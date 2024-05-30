@@ -1,20 +1,16 @@
 package com.example.yummynotes.workers
-/*
+
 import android.content.Context
 import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.example.yummynotes.data.RecipeDatabase
-import com.example.yummynotes.models.Recipe
 import com.example.yummynotes.models.getRecipes
 import kotlinx.coroutines.coroutineScope
 
-/**
- * Class that seeds the database at first app start
- */
 class SeedDatabaseWorker(
-        context: Context,
-        workerParams: WorkerParameters
+    context: Context,
+    workerParams: WorkerParameters
 ) : CoroutineWorker(context, workerParams) {
     override suspend fun doWork(): Result = coroutineScope {
         try {
@@ -32,12 +28,12 @@ class SeedDatabaseWorker(
     }
 
     private suspend fun populateDatabase(database: RecipeDatabase){
+        Log.d(TAG, "populating database")
         val dao = database.recipeDao()
 
-       // dao.deleteAll()
+        dao.deleteAllRecipes()
         getRecipes().forEach{
             dao.add(it)
         }
     }
 }
-*/

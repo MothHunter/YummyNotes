@@ -1,3 +1,36 @@
 <resources>
     <string name="app_name">YummyNotes</string>
+    <string name="my_recipes">My Recipes</string>
+    <string name="description">Description</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="instructions">Instructions</string>
+    <string name="read">read</string>
+    <string name="delete_recipe">delete recipe</string>
+    <string name="find_recipes">Find Recipes</string>
+    <string name="add_Recipe">Add Recipe</string>
+    <string name="pick_image">Pick Image</string>
+    <string name="edit_recipe">Edit Recipe</string>
+    <string name="favorite_recipes">Favorite Recipes</string>
+    <string name="recipe_name">Recipe Name</string>
+    <string name="suggest_recipe">Suggest a recipe</string>
+    <string name="picture_of">Picture of</string>
+    <string name="recommended_recipes">Recommended recipes</string>
+    <string name="back">back</string>
+    <string name="categories">categories</string>
+    <string name="create">create</string>
+    <string name="VORSPEISE">Starter</string>
+    <string name="NACHSPEISEN">Desert</string>
+    <string name="HAUPTSPEISEN">Main Dish</string>
+    <string name="SNACKS">Snacks</string>
+    <string name="SALATE">Salad</string>
+    <string name="SUPPEN">Soup</string>
+    <string name="VEGETARISCH">Vegetarian</string>
+    <string name="VEGAN">Vegan</string>
+    <string name="SANDWICHES">Sandwiches</string>
+    <string name="SMOOTHIES">Smoothies</string>
+    <string name="BACKWAREN">Pastries</string>
+    <string name="TORTEN">Cakes</string>
+    <string name="FLEISCH">Meat</string>
+    <string name="MEDITERRAN">Mediterranean</string>
+    <string name="FASTFOOD">Fastfood</string>
 </resources>
